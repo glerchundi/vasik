@@ -1,0 +1,26 @@
+output  = 'maths'
+
+sources = [
+            output + '.cc',
+            output + '.i',
+            'complex.cc',
+            'dsp.cc',            
+          ]
+          
+env = Environment(tools = ['default','swig'])
+
+if env.Detect('swig') == None:
+    print 'No SWiG tool detected, install (www.swig.org) it or put it into the $PATH'
+    Exit()
+
+env.Append(CPPPATH=['/usr/include/malloc']) ## malloc.h (Mac OS X)
+env.Append(CPPPATH=['../../libs/lua-5.1/src/'])
+env.Append(LIBS=['m'])
+env.Replace(SWIGFLAGS='-c++ -lua')
+env.Replace(SHLINKFLAGS='-bundle -flat_namespace -undefined suppress')
+env.Replace(SHLIBPREFIX='')
+env.Replace(SHLIBSUFFIX='.so')
+
+objs = env.SharedObject(sources)
+
+env.SharedLibrary(output,objs)

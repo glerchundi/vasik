@@ -1,0 +1,38 @@
+import sys
+
+output = 'imagesystem'
+
+sources = [
+            output + '.cc',
+            output + '.i',
+            
+            'src/Noise.cc',            
+            'src/Checker.cc',
+            'src/Perlin.cc',
+          ]
+          
+env = Environment(tools = ['default','swig'])
+
+if env.Detect('swig') == None:
+    print 'No SWiG tool detected, install (www.swig.org) it or put it into the $PATH'
+    Exit()
+    
+if sys.platform == 'darwin':
+	env.Append(CPPPATH=['/usr/include/malloc']) ## malloc.h (Mac OS X)	
+	env.Append(CPPPATH=['../../libs/lua-5.1/src/'])
+	env.Append(CPPPATH=['../../BaseLibrary/'])
+	env.Append(CPPPATH=['../../libs/FreeImage/Source/'])	
+
+	env.Append(LIBPATH=['../../BaseLibrary/'])
+	env.Append(LIBPATH=['../../libs/FreeImage/'])	
+	env.Append(LIBS=['vasik','freeimage'])
+
+	env.Replace(SWIGFLAGS='-c++ -lua')
+
+	env.Replace(SHLINKFLAGS='-bundle -flat_namespace -undefined suppress')
+	env.Replace(SHLIBPREFIX='')
+	env.Replace(SHLIBSUFFIX='.so')
+
+objs = env.SharedObject(sources)
+
+env.SharedLibrary(output,objs)
