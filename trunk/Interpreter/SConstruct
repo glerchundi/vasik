@@ -1,0 +1,40 @@
+output	= 'player'
+sources = [
+            'main.cc',
+	  ]
+
+env = Environment()
+
+#env.Append(CPPPATH=['/Library/Frameworks/SDL.framework/Headers'])
+env.Append(CPPPATH=['../BaseLibrary/'])
+env.Append(CPPPATH=['../libs/lua-5.1/src/'])
+env.Append(LIBPATH=['../BaseLibrary/'])
+env.Append(LIBS=['inguma'])
+#env.Append(LINKFLAGS='-framework SDL -framework Cocoa')
+env.Append(LINKFLAGS='-framework Cocoa')
+
+commands = 	[
+				'#',
+				'# Creating application bundle...',
+				'#',				
+				'mkdir -p '+output+'.app/Contents',
+				'mkdir -p '+output+'.app/Contents/MacOS',
+				'mkdir -p '+output+'.app/Contents/Resources',
+				'cp Info.plist.in tmp',
+				'sed -e "s/IDENTIFIER//" tmp > tmp',
+				'sed -e "s/EXECUTABLE/'+output+'/" tmp > tmp',
+				'sed -e "s/VERSION/2.6.3/" tmp > tmp',
+				'mv tmp '+output+'.app/Contents/Info.plist',
+				'echo -n "APPL????" > '+output+'.app/Contents/PkgInfo', 
+				'cp '+output+' '+output+'.app/Contents/MacOS/'+output,
+				'cp libinguma.dylib '+output+'.app/Contents/Resources/',				
+				'cp *.so '+output+'.app/Contents/Resources/',
+				'cp -fr data '+output+'.app/Contents/Resources/',
+				'install_name_tool -change libinguma.dylib @executable_path/../Resources/libinguma.dylib '+output+'.app/Contents/MacOS/'+output,
+			]
+
+tgt = env.Program(output, env.Object(sources))
+
+AddPreAction(sources,"export MACOSX_DEPLOYMENT_TARGET='10.4'")
+AddPostAction(tgt, commands)
+
