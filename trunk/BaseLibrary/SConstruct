@@ -1,0 +1,23 @@
+output = 'libvasik'
+
+sources = [ 
+            'TVasik.cc',
+            'TLog.cc',
+          ]
+
+env = Environment()          
+
+env.Append(CPPPATH=['../libs/lua-5.1/src/'])
+env.Append(LIBPATH=['../libs/lua-5.1/src/'])
+env.Append(LIBS=['lua'])
+
+# Mac OS X
+env.Append(CPPFLAGS=['-fno-common'])
+env.Replace(SHLINKFLAGS='-dynamiclib -undefined dynamic_lookup')
+
+env.Replace(SHLIBPREFIX='')
+env.Replace(SHLIBSUFFIX='.dylib')
+
+objs = env.SharedObject(sources)
+
+env.SharedLibrary(output,objs)
