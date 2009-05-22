@@ -44,5 +44,5 @@ Installing FMOD 3.75:
     wget http://www.fmod.org/index.php/release/version/fmodapi375mac.zip <br>
     unzip fmodapi375mac.zip <br>
     cd fmodapi375mac <br>
-    sudo cp api/inc/* /usr/local/include/ <br>
-    sudo cp api/lib/* /usr/local/lib/ <br>
+    sudo cp api/inc/`*` /usr/local/include/ <br>
+    sudo cp api/lib/`*` /usr/local/lib/ <br>
