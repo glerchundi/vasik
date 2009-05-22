@@ -5,14 +5,14 @@
 An installation guide.
 
 = Details =
-Installing SCons 1.2.0:
+*Installing SCons 1.2.0:*
 
     wget http://prdownloads.sourceforge.net/scons/scons-1.2.0.tar.gz <br>
     tar xvfz scons-1.2.0.tar.gz <br>
     cd scons-1.2.0 <br>
     sudo python setup.py install <br>
 
-Installing SWiG 1.2.0:
+*Installing SWiG 1.2.0:*
 
     wget http://prdownloads.sourceforge.net/swig/swig-1.3.39.tar.gz <br>
     tar xvfz swig-1.3.39.tar.gz <br>
@@ -21,7 +21,7 @@ Installing SWiG 1.2.0:
     make <br>
     sudo make install <br>
 
-Installing lua 5.1:
+*Installing lua 5.1:*
 
     wget http://www.lua.org/ftp/lua-5.1.X.tar.gz <br>
     tar xvfz lua-5.1.X.tar.gz <br>
@@ -29,7 +29,7 @@ Installing lua 5.1:
     make macosx <br>
     sudo make install <br>
 
-Installing glfw 2.6:
+*Installing glfw 2.6:*
 
     wget http://prdownloads.sourceforge.net/glfw/glfw-2.6.tar.bz2 <br>
     tar xvfj glfw-2.6.tar.bz2 <br>
@@ -38,7 +38,7 @@ Installing glfw 2.6:
     ./compile.sh <br>
     make macosx-gcc <br>
 
-Installing FreeImage 3.12.0:
+*Installing FreeImage 3.12.0:*
 
     wget http://downloads.sourceforge.net/freeimage/FreeImage3120.zip <br>
     unzip FreeImage3120.zip <br>
@@ -46,7 +46,7 @@ Installing FreeImage 3.12.0:
     make -f Makefile.osx <br>
     sudo make install <br>
 
-Installing fftw 3.2:
+*Installing fftw 3.2:*
 
     wget http://www.fftw.org/fftw-3.2.1.tar.gz <br>
     tar xvfz fftw-3.2.1.tar.gz <br>
@@ -55,7 +55,7 @@ Installing fftw 3.2:
     make <br>
     sudo make install <br>
 
-Installing FMOD 3.75:
+*Installing FMOD 3.75:*
 
     wget http://www.fmod.org/index.php/release/version/fmodapi375mac.zip <br>
     unzip fmodapi375mac.zip <br>
