@@ -7,11 +7,11 @@ An installation guide.
 = Details =
 Installing lua 5.1:
 
-wget http://www.lua.org/ftp/lua-5.1.X.tar.gz
-tar xvfz lua-5.1.X.tar.gz
-cd lua-5.1.X/
-make macosx
-sudo make install
+   wget http://www.lua.org/ftp/lua-5.1.X.tar.gz
+   tar xvfz lua-5.1.X.tar.gz
+   cd lua-5.1.X/
+   make macosx
+   sudo make install
 
 Installing glfw 2.6:
 
