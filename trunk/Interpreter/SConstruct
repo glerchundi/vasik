@@ -5,12 +5,11 @@ sources = [
 
 env = Environment()
 
-#env.Append(CPPPATH=['/Library/Frameworks/SDL.framework/Headers'])
+#env.Append(CPPPATH=['/usr/local/include/'])
 env.Append(CPPPATH=['../BaseLibrary/'])
-env.Append(CPPPATH=['../libs/lua-5.1/src/'])
+#env.Append(LIBPATH=['/usr/local/lib/'])
 env.Append(LIBPATH=['../BaseLibrary/'])
-env.Append(LIBS=['inguma'])
-#env.Append(LINKFLAGS='-framework SDL -framework Cocoa')
+env.Append(LIBS=['vasik'])
 env.Append(LINKFLAGS='-framework Cocoa')
 
 commands = 	[
@@ -27,7 +26,7 @@ commands = 	[
 				'mv tmp '+output+'.app/Contents/Info.plist',
 				'echo -n "APPL????" > '+output+'.app/Contents/PkgInfo', 
 				'cp '+output+' '+output+'.app/Contents/MacOS/'+output,
-				'cp libinguma.dylib '+output+'.app/Contents/Resources/',				
+				'cp libvasik.dylib '+output+'.app/Contents/Resources/',				
 				'cp *.so '+output+'.app/Contents/Resources/',
 				'cp -fr data '+output+'.app/Contents/Resources/',
 				'install_name_tool -change libinguma.dylib @executable_path/../Resources/libinguma.dylib '+output+'.app/Contents/MacOS/'+output,

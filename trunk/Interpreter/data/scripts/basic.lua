@@ -15,9 +15,8 @@ window:init('iNguma',640,480,32,false);
 -- INIT SOUNDSYSTEM
 soundsys:init();
 soundsys:spectrum(true);
-soundsys:loadstream("oasis"    ,"data/Oasis - Wonderwall.mp3"            );
-soundsys:loadstream("coldplay" ,"data/Coldplay - Violet Hill.mp3"        );
-soundsys:playstream("oasis");
+soundsys:loadstream("dialup","data/dialup.mp3");
+soundsys:playstream("dialup");
 
 -- INIT IMAGESYSTEM
 imgsys:init();

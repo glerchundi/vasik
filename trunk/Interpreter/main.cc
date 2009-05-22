@@ -1,6 +1,6 @@
-#include "TInguma.h"
+#include "TVasik.h"
 
 int main(int argc,char **argv) {
-	TInguma *inguma = new TInguma("data/script.lua");
+	TVasik *vasik = new TVasik("data/script.lua");
 	return 0;
 }

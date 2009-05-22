@@ -7,8 +7,8 @@ sources = [
 
 env = Environment()          
 
-env.Append(CPPPATH=['../libs/lua-5.1/src/'])
-env.Append(LIBPATH=['../libs/lua-5.1/src/'])
+#env.Append(CPPPATH=['/usr/local/include/'])
+#env.Append(LIBPATH=['/usr/local/lib/'])
 env.Append(LIBS=['lua'])
 
 # Mac OS X
