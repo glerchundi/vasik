@@ -18,18 +18,14 @@ if env.Detect('swig') == None:
 if sys.platform == 'darwin':
 	env.Append(CPPPATH=['/usr/include/malloc/']) ## malloc.h (Mac OS X)	
 	env.Append(CPPPATH=['../../BaseLibrary/'])
-	env.Append(CPPPATH=['../../libs/lua-5.1/src/'])
-	env.Append(CPPPATH=['../../libs/fmod/inc/'])
-	env.Append(CPPPATH=['../../libs/fftw-3.2/api/'])
 	
 	env.Append(LIBPATH=['../../BaseLibrary/'])
-	env.Append(LIBPATH=['../../libs/fmod/lib/'])
-	env.Append(LIBPATH=['../../libs/fftw-3.2/.libs/'])	
 	env.Append(LIBS=['vasik','fmodx86','fftw3'])	
 	
 	env.Replace(SWIGFLAGS='-c++ -lua')
 	
-	env.Replace(SHLINKFLAGS='-bundle -flat_namespace -undefined suppress -framework Carbon')
+	env.Replace(SHLINKFLAGS='-bundle -flat_namespace -undefined suppress')
+	env.Append(SHLINKFLAGS=' -framework Carbon');
 	env.Replace(SHLIBPREFIX='')
 	env.Replace(SHLIBSUFFIX='.so')
 

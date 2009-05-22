@@ -1,3 +1,5 @@
+import sys
+
 output = 'scheduler'
 
 sources = [
@@ -11,15 +13,18 @@ if env.Detect('swig') == None:
     print 'No SWiG tool detected, install (www.swig.org) it or put it into the $PATH'
     Exit()
 
-env.Append(CPPPATH=['/usr/include/malloc']) ## malloc.h (Mac OS X)
-env.Append(CPPPATH=['../../libs/lua-5.1/src/'])
-env.Append(CPPPATH=['../../BaseLibrary/'])
-env.Append(LIBPATH=['../../BaseLibrary/'])
-env.Append(LIBS=['vasik'])
-env.Replace(SWIGFLAGS='-c++ -lua')
-env.Replace(SHLINKFLAGS='-bundle -flat_namespace -undefined suppress')
-env.Replace(SHLIBPREFIX='')
-env.Replace(SHLIBSUFFIX='.so')
+if sys.platform == 'darwin':
+	env.Append(CPPPATH=['/usr/include/malloc']) ## malloc.h (Mac OS X)
+	env.Append(CPPPATH=['../../BaseLibrary/'])
+	
+	env.Append(LIBPATH=['../../BaseLibrary/'])
+	env.Append(LIBS=['vasik'])
+	
+	env.Replace(SWIGFLAGS='-c++ -lua')
+	
+	env.Replace(SHLINKFLAGS='-bundle -flat_namespace -undefined suppress')
+	env.Replace(SHLIBPREFIX='')
+	env.Replace(SHLIBSUFFIX='.so')
 
 objs = env.SharedObject(sources)
 

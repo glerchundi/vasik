@@ -19,12 +19,9 @@ if env.Detect('swig') == None:
     
 if sys.platform == 'darwin':
 	env.Append(CPPPATH=['/usr/include/malloc']) ## malloc.h (Mac OS X)	
-	env.Append(CPPPATH=['../../libs/lua-5.1/src/'])
 	env.Append(CPPPATH=['../../BaseLibrary/'])
-	env.Append(CPPPATH=['../../libs/FreeImage/Source/'])	
 
 	env.Append(LIBPATH=['../../BaseLibrary/'])
-	env.Append(LIBPATH=['../../libs/FreeImage/'])	
 	env.Append(LIBS=['vasik','freeimage'])
 
 	env.Replace(SWIGFLAGS='-c++ -lua')

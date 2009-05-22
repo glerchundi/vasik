@@ -1,3 +1,5 @@
+import sys
+
 output = 'glwindow'
 
 sources = [
@@ -11,21 +13,21 @@ if env.Detect('swig') == None:
     print 'No SWiG tool detected, install (www.swig.org) it or put it into the $PATH'
     Exit()
 
-# Mac OS X
-env.Append(CPPPATH=['/usr/include/malloc']) ## malloc.h (Mac OS X)
-env.Append(CPPPATH=['../../libs/lua-5.1/src/'])
-env.Append(CPPPATH=['../../BaseLibrary/'])
-env.Append(CPPPATH=['../../libs/glfw/include/'])
-
-env.Append(LIBPATH=['../../BaseLibrary/'])
-env.Append(LIBPATH=['../../libs/glfw/lib/macosx/'])
-
-env.Append(LIBS=['vasik', 'glfw'])
-env.Replace(SWIGFLAGS='-c++ -lua')
-env.Replace(SHLINKFLAGS='-bundle -flat_namespace -undefined suppress')
-env.Append(SHLINKFLAGS=' -framework Cocoa -framework OpenGL -framework AGL')
-env.Replace(SHLIBPREFIX='')
-env.Replace(SHLIBSUFFIX='.so')
+if sys.platform == 'darwin':
+	env.Append(CPPPATH=['/usr/include/malloc']) ## malloc.h (Mac OS X)
+	env.Append(CPPPATH=['../../BaseLibrary/'])
+	
+	env.Append(LIBPATH=['../../BaseLibrary/'])
+	env.Append(LIBS=['vasik', 'glfw'])
+	
+	env.Replace(SWIGFLAGS='-c++ -lua')
+	
+	env.Replace(SHLINKFLAGS='-bundle -flat_namespace -undefined suppress')
+	env.Append(SHLINKFLAGS=' -framework Cocoa')
+	env.Append(SHLINKFLAGS=' -framework OpenGL')
+	env.Append(SHLINKFLAGS=' -framework AGL')
+	env.Replace(SHLIBPREFIX='')
+	env.Replace(SHLIBSUFFIX='.so')
 
 objs = env.SharedObject(sources)
 
