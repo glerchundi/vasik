@@ -5,8 +5,44 @@
 An installation guide.
 
 = Details =
+Installing lua 5.1:
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+wget http://www.lua.org/ftp/lua-5.1.X.tar.gz
+tar xvfz lua-5.1.X.tar.gz
+cd lua-5.1.X/
+make macosx
+sudo make install
+
+Installing glfw 2.6:
+
+wget http://prdownloads.sourceforge.net/glfw/glfw-2.6.tar.bz2
+tar xvfj glfw-2.6.tar.bz2
+cd glfw/
+chmod +x compile.sh
+./compile.sh
+make macosx-gcc
+
+Installing FreeImage 3.12.0:
+
+wget http://downloads.sourceforge.net/freeimage/FreeImage3120.zip
+unzip FreeImage3120.zip
+cd FreeImage
+make -f Makefile.osx
+sudo make install
+
+Installing fftw 3.2:
+
+wget http://www.fftw.org/fftw-3.2.1.tar.gz
+tar xvfz fftw-3.2.1.tar.gz
+cd fftw-3.2.1/
+./configure
+make
+sudo make install
+
+Installing FMOD 3.75:
+
+wget http://www.fmod.org/index.php/release/version/fmodapi375mac.zip
+unzip fmodapi375mac.zip
+cd fmodapi375mac
+sudo cp api/inc/* /usr/local/include/
+sudo cp api/lib/* /usr/local/lib/
