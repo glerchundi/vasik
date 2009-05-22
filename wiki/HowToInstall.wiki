@@ -15,29 +15,29 @@ Installing lua 5.1:
 
 Installing glfw 2.6:
 
-wget http://prdownloads.sourceforge.net/glfw/glfw-2.6.tar.bz2
-tar xvfj glfw-2.6.tar.bz2
-cd glfw/
-chmod +x compile.sh
-./compile.sh
-make macosx-gcc
+    wget http://prdownloads.sourceforge.net/glfw/glfw-2.6.tar.bz2 <br>
+    tar xvfj glfw-2.6.tar.bz2 <br>
+    cd glfw/ <br>
+    chmod +x compile.sh <br>
+    ./compile.sh <br>
+    make macosx-gcc <br>
 
 Installing FreeImage 3.12.0:
-<blockquote>
-wget http://downloads.sourceforge.net/freeimage/FreeImage3120.zip
-unzip FreeImage3120.zip
-cd FreeImage
-make -f Makefile.osx
-sudo make install
-</blockquote>
+
+    wget http://downloads.sourceforge.net/freeimage/FreeImage3120.zip <br>
+    unzip FreeImage3120.zip <br>
+    cd FreeImage <br>
+    make -f Makefile.osx <br>
+    sudo make install <br>
+
 Installing fftw 3.2:
 
-wget http://www.fftw.org/fftw-3.2.1.tar.gz
-tar xvfz fftw-3.2.1.tar.gz
-cd fftw-3.2.1/
-./configure
-make
-sudo make install
+    wget http://www.fftw.org/fftw-3.2.1.tar.gz <br>
+    tar xvfz fftw-3.2.1.tar.gz <br>
+    cd fftw-3.2.1/ <br>
+    ./configure <br>
+    make <br>
+    sudo make install <br>
 
 Installing FMOD 3.75:
 
