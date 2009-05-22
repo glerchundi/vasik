@@ -41,8 +41,8 @@ Installing fftw 3.2:
 
 Installing FMOD 3.75:
 
-wget http://www.fmod.org/index.php/release/version/fmodapi375mac.zip
-unzip fmodapi375mac.zip
-cd fmodapi375mac
-sudo cp api/inc/* /usr/local/include/
-sudo cp api/lib/* /usr/local/lib/
+    wget http://www.fmod.org/index.php/release/version/fmodapi375mac.zip <br>
+    unzip fmodapi375mac.zip <br>
+    cd fmodapi375mac <br>
+    sudo cp api/inc/* /usr/local/include/ <br>
+    sudo cp api/lib/* /usr/local/lib/ <br>
