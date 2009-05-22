@@ -9,7 +9,7 @@ Installing SCons 1.2.0:
 
     wget http://prdownloads.sourceforge.net/scons/scons-1.2.0.tar.gz <br>
     tar xvfz scons-1.2.0.tar.gz <br>
-    cd scons-1.2.0
+    cd scons-1.2.0 <br>
     sudo python setup.py install <br>
 
 Installing SWiG 1.2.0:
