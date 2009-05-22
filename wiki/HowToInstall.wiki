@@ -7,11 +7,11 @@ An installation guide.
 = Details =
 Installing lua 5.1:
 
-   wget http://www.lua.org/ftp/lua-5.1.X.tar.gz
-   tar xvfz lua-5.1.X.tar.gz
-   cd lua-5.1.X/
-   make macosx
-   sudo make install
+    wget http://www.lua.org/ftp/lua-5.1.X.tar.gz <br>
+    tar xvfz lua-5.1.X.tar.gz <br>
+    cd lua-5.1.X/ <br>
+    make macosx <br>
+    sudo make install <br>
 
 Installing glfw 2.6:
 
@@ -23,13 +23,13 @@ chmod +x compile.sh
 make macosx-gcc
 
 Installing FreeImage 3.12.0:
-
+<blockquote>
 wget http://downloads.sourceforge.net/freeimage/FreeImage3120.zip
 unzip FreeImage3120.zip
 cd FreeImage
 make -f Makefile.osx
 sudo make install
-
+</blockquote>
 Installing fftw 3.2:
 
 wget http://www.fftw.org/fftw-3.2.1.tar.gz
