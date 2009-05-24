@@ -33,7 +33,7 @@ if sys.platform == 'darwin':
               'cp ../BaseLibrary/libvasik.dylib '+output+'.app/Contents/Resources/',				
               'cp *.so '+output+'.app/Contents/Resources/',
               'cp -fr data '+output+'.app/Contents/Resources/',
-              'install_name_tool -change libinguma.dylib @executable_path/../Resources/libinguma.dylib '+output+'.app/Contents/MacOS/'+output,
+              'install_name_tool -change libvasik.dylib @executable_path/../Resources/libvasik.dylib '+output+'.app/Contents/MacOS/'+output,
             ]
 
 	tgt = env.Program(output, env.Object(sources))

@@ -1,1 +1,0 @@
-scripts/basic.lua
