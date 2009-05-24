@@ -4,13 +4,13 @@ require('effect');
 require('imagesystem');
 
 -- CREATE OBJECTS
-window   = glwindow:glwindow();
-soundsys = soundsystem:soundsystem();
-fx       = effect:effect();
-imgsys   = imagesystem:imagesystem();
+window   = glwindow.glwindow();
+soundsys = soundsystem.soundsystem();
+fx       = effect.effect();
+imgsys   = imagesystem.imagesystem();
 
 -- INIT WINDOW
-window:init('iNguma',640,480,32,false);
+window:init('Vasik*',640,480,32,false);
 
 -- INIT SOUNDSYSTEM
 soundsys:init();
