@@ -1,5 +1,13 @@
 #/bin/sh
 
+if [ "$#" -eq 0 ]
+then
+    echo $0 binfile
+    exit 0
+else
+	OUTPUT=$1
+fi
+
 INFOPLIST="<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <!DOCTYPE plist SYSTEM \"file://localhost/System/Library/DTDs/PropertyList.dtd\">
 <plist version=\"0.9\">
@@ -47,9 +55,9 @@ mkdir -p $OUTPUT.app/Contents
 mkdir -p $OUTPUT.app/Contents/MacOS
 mkdir -p $OUTPUT.app/Contents/Resources
 
-INFOPLIST=`echo $INFOPLIST | sed -e "s/IDENTIFIER//"`
-INFOPLIST=`echo $INFOPLIST | sed -e "s/EXECUTABLE/$OUTPUT/"`
-INFOPLIST=`echo $INFOPLIST | sed -e "s/VERSION/0.0.0/"`
+INFOPLIST=`echo $INFOPLIST | sed -e "s/IDENTIFIER//g"`
+INFOPLIST=`echo $INFOPLIST | sed -e "s/EXECUTABLE/$OUTPUT/g"`
+INFOPLIST=`echo $INFOPLIST | sed -e "s/VERSION/0.0.0/g"`
 
 echo $INFOPLIST > $OUTPUT.app/Contents/Info.plist
 echo -n "APPL????" > $OUTPUT.app/Contents/PkgInfo
