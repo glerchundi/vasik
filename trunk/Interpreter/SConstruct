@@ -30,7 +30,7 @@ if sys.platform == 'darwin':
               'mv tmp '+output+'.app/Contents/Info.plist',
               'echo -n "APPL????" > '+output+'.app/Contents/PkgInfo', 
               'cp '+output+' '+output+'.app/Contents/MacOS/'+output,
-              'cp libvasik.dylib '+output+'.app/Contents/Resources/',				
+              'cp ../BaseLibrary/libvasik.dylib '+output+'.app/Contents/Resources/',				
               'cp *.so '+output+'.app/Contents/Resources/',
               'cp -fr data '+output+'.app/Contents/Resources/',
               'install_name_tool -change libinguma.dylib @executable_path/../Resources/libinguma.dylib '+output+'.app/Contents/MacOS/'+output,
@@ -38,6 +38,7 @@ if sys.platform == 'darwin':
 
 	tgt = env.Program(output, env.Object(sources))
 
+	Clean(tgt, output+'.app')
 	AddPreAction(sources, "export MACOSX_DEPLOYMENT_TARGET='10.4'")
 	AddPostAction(tgt, cmds)
 
