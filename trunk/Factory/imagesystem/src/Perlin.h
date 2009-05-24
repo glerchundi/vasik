@@ -3,7 +3,7 @@
 
 #include "FreeImage.h"
 
-#include "TInguma.h"
+#include "TVasik.h"
 #include "Noise.h"
 
 class Perlin
