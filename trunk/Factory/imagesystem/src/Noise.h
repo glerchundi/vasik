@@ -16,7 +16,7 @@ public:
 	static float linearInterpolator(float v1, float v2, float x);
 	static float cosineInterpolator(float v1, float v2, float x);
 	static float cubicInterpolator(float v0, float v1, float v2, float v3, float x);
-	static void  Noise::setSeed(unsigned int seed);
+	static void  setSeed(unsigned int seed);
 	static void  setPrimes(unsigned int p1, unsigned int p2, unsigned int p3);
 	static float noise1D(int x);
 	static float noise2D(int x, int y);

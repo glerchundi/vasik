@@ -8,16 +8,24 @@ sources = [
             'TPlugin.cc',
           ]
 
-env = Environment()          
+env = Environment()
 
 if sys.platform == 'darwin':
+    env.Append(CCFLAGS=['-D__MACOSX__'])
+
     env.Append(LIBS=['lua'])
 
-    env.Append(CPPFLAGS=['-fno-common'])
     env.Replace(SHLINKFLAGS='-dynamiclib -undefined dynamic_lookup')
-
     env.Replace(SHLIBPREFIX='')
     env.Replace(SHLIBSUFFIX='.dylib')
+elif sys.platform == 'linux2':
+    env.Append(CCFLAGS=['-D__LINUX__'])
+
+    env.Append(LIBS=['lua','dl'])
+
+    env.Replace(SHLINKFLAGS='-shared')
+    env.Replace(SHLIBPREFIX='')
+    env.Replace(SHLIBSUFFIX='.so')
 
 objs = env.SharedObject(sources)
 

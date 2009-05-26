@@ -18,6 +18,8 @@ if env.Detect('swig') == None:
     Exit()
     
 if sys.platform == 'darwin':
+	env.Append(CCFLAGS=['-D__MACOSX__'])
+
 	env.Append(CPPPATH=['/usr/include/malloc']) ## malloc.h (Mac OS X)	
 	env.Append(CPPPATH=['../../BaseLibrary/'])
 
@@ -27,6 +29,20 @@ if sys.platform == 'darwin':
 	env.Replace(SWIGFLAGS='-c++ -lua')
 
 	env.Replace(SHLINKFLAGS='-bundle -flat_namespace -undefined suppress')
+	env.Replace(SHLIBPREFIX='')
+	env.Replace(SHLIBSUFFIX='.so')
+elif sys.platform == 'linux2':
+	env.Append(CCFLAGS=['-D__LINUX__'])
+
+	env.Append(CPPPATH=['../../BaseLibrary/'])
+
+	env.Append(LIBPATH=['../../BaseLibrary/'])
+	env.Append(LIBS=['vasik','freeimage'])
+	env.Append(LIBS=['GL','GLU'])
+
+	env.Replace(SWIGFLAGS='-c++ -lua')
+
+	env.Replace(SHLINKFLAGS='-shared')
 	env.Replace(SHLIBPREFIX='')
 	env.Replace(SHLIBSUFFIX='.so')
 

@@ -3,12 +3,6 @@
 
 #include "TVasik.h"
 
-#ifdef __MACH__
-    #include <Carbon/Carbon.h>
-#else
-    #include <Carbon.h>    /* For MPAllocateAligned() */
-#endif
-
 extern "C" {
 	#include "fftw3.h"
 }

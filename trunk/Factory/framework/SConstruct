@@ -14,8 +14,9 @@ if env.Detect('swig') == None:
     Exit()
     
 if sys.platform == 'darwin':
+	env.Append(CCFLAGS=['-D__MACOSX__'])
+
 	env.Append(CPPPATH=['/usr/include/malloc']) ## malloc.h (Mac OS X)	
-	env.Append(CPPPATH=['../../libs/lua-5.1/src/'])
 	env.Append(CPPPATH=['../../BaseLibrary/'])
 
 	env.Append(LIBPATH=['../../BaseLibrary/'])
@@ -26,6 +27,19 @@ if sys.platform == 'darwin':
 	env.Replace(SHLINKFLAGS='-bundle -undefined dynamic_lookup')
 	env.Replace(SHLIBPREFIX='')
 	env.Replace(SHLIBSUFFIX='.so')
+elif sys.platform == 'linux2':
+    env.Append(CCFLAGS=['-D__LINUX__'])
+
+    env.Append(CPPPATH=['../../BaseLibrary/'])
+
+    env.Append(LIBPATH=['../../BaseLibrary/'])
+    env.Append(LIBS=['vasik'])
+
+    env.Replace(SWIGFLAGS='-c++ -lua')
+
+    env.Replace(SHLINKFLAGS='-shared')
+    env.Replace(SHLIBPREFIX='')
+    env.Replace(SHLIBSUFFIX='.so')
 
 objs = env.SharedObject(sources)
 

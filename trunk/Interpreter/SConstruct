@@ -15,10 +15,16 @@ if sys.platform == 'darwin':
 	env.Append(LIBS=['vasik'])
 
 	env.Append(LINKFLAGS='-framework Cocoa')
-
-	tgt = env.Program(output, env.Object(sources))
-
-#	Clean(tgt, output+".app")
+	
 	AddPreAction(sources, "export MACOSX_DEPLOYMENT_TARGET='10.4'")
-#	AddPostAction(tgt, cmds)
+elif sys.platform == 'linux2':
+	env.Append(CCFLAGS=['-D__LINUX__'])
 
+	env.Append(CPPPATH=['../BaseLibrary/'])
+
+	env.Append(LIBPATH=['../BaseLibrary/'])
+	env.Append(LIBS=['vasik'])
+	
+	env.Append(LINKFLAGS='-Wl,-rpath,./')
+
+tgt = env.Program(output, env.Object(sources))

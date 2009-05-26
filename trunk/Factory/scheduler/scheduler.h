@@ -1,6 +1,8 @@
 #ifndef SCHEDULER_H__
 #define SCHEDULER_H__
 
+#include "TVasik.h"
+
 class scheduler
 {
 public:
