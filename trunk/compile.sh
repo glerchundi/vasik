@@ -1,5 +1,7 @@
 #!/bin/bash
 
+OS=`uname -s | tr "[:upper:]" "[:lower:]"`
+
 HOMEDIR=`pwd`
 BASELIBRARYDIR="$HOMEDIR/BaseLibrary/"
 FACTORYDIR="$HOMEDIR/Factory/"
@@ -33,14 +35,23 @@ if [ "$#" -gt 0 ]; then
 	elif [ $1 = "compile" ]; then
 		ARG="compile"
 	else
-		echo "Unknown parameter passed."
+		echo "Unknown parameter: $1."
 		exit
 	fi
 else
 	ARG="compile"
 fi
 
-DoSCONS $BASELIBRARYDIR "libvasik.dylib"
+if [ $OS = "darwin" ]; then
+	LIBSUFFIX=".dylib"
+elif [ $OS = "linux" ]; then
+	LIBSUFFIX=".so"
+else
+	echo "Unknown operating system: $OS."
+	exit
+fi
+
+DoSCONS $BASELIBRARYDIR "libvasik"$LIBSUFFIX
 for plugin in $PLUGINS; do
 	DoSCONS $FACTORYDIR/$plugin "*.so"
 done
