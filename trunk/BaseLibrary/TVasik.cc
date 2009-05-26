@@ -26,7 +26,7 @@ void TVasik::changedir(void) {
 }
 
 void TVasik::loadscript(const char *name) {
-	int error;
+	int status;
 	
 	// log date&time
 	char *tmp;
@@ -49,10 +49,16 @@ void TVasik::loadscript(const char *name) {
 	
 	LOGTHIS("Loading %s script file",name);
 	// Run a test script to exercise our new function 
-	if(luaL_loadfile(state, name) == 0)
-	    error = lua_pcall(state,0,0,0);
-	
-	if (error != 0) lua_gc(state, LUA_GCCOLLECT, 0);
+	status = luaL_loadfile(state, name);
+	if(status == 0) {
+	    status = lua_pcall(state, 0, 0, 0);
+	}
+
+	if (status != 0) {
+		LOGTHIS("%s", lua_tostring(state, -1));
+    	lua_pop(state, 1);
+		lua_gc(state, LUA_GCCOLLECT, 0);
+	}
 	 
 	// Clean up Lua
 	lua_close(state);
