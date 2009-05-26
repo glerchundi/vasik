@@ -1,4 +1,4 @@
-#/bin/sh
+#/bin/bash
 
 if [ "$#" -eq 0 ]
 then
@@ -49,7 +49,8 @@ echo ""
 echo "**********************************"
 echo "* Creating application bundle... *"
 echo "**********************************"
-echo ""
+
+set -o verbose
 
 mkdir -p $OUTPUT.app/Contents
 mkdir -p $OUTPUT.app/Contents/MacOS
