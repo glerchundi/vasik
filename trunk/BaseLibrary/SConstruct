@@ -5,6 +5,7 @@ output = 'libvasik'
 sources = [ 
             'TVasik.cc',
             'TLog.cc',
+            'TPlugin.cc',
           ]
 
 env = Environment()          

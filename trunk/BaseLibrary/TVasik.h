@@ -12,6 +12,7 @@ extern "C"
 
 #include "TLog.h"
 #include "TList.h"
+#include "TPlugin.h"
 
 #ifdef __APPLE__
     #include "CoreFoundation/CoreFoundation.h"
