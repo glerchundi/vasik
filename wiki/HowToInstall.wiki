@@ -2,6 +2,10 @@
 
 = Introduction =
 
+Ubuntu:
+libglu1-mesa-dev
+mesa-common-dev
+
 An installation guide.
 
 = Details =
