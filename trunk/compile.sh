@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 HOMEDIR=`pwd`
 BASELIBRARYDIR="$HOMEDIR/BaseLibrary/"
@@ -6,38 +6,42 @@ FACTORYDIR="$HOMEDIR/Factory/"
 INTERPRETERDIR="$HOMEDIR/Interpreter/"
 RELEASEDIR="$HOMEDIR/Release/"
 
-PLUGINS=`ls $FACTORYDIR`
+PLUGINS=`ls $FACTORYDIR 2> /dev/null`
 
 SCONSCOMPILE="-Q"
 SCONSCLEAN="-c"
 
-if [ "$#" -gt 0 ];
-then
-	if [ $1 = "clean" ];
-	then
-		SCONSARGS=$SCONSCLEAN
+function DoSCONS {
+	cd $1
+	if [ $ARG = "compile" ]; then
+		echo "Compiling $1 ..."
+		scons $SCONSCOMPILE
+		cp $2 $RELEASEDIR
 	else
-		SCONSARGS=$SCONSCOMPILE
+		echo "Cleaning $1 ..."
+		scons $SCONSCLEAN
+		if [ `ls -l $RELEASEDIR/$2 2> /dev/null | wc -l` -gt 0 ]; then
+			rm $RELEASEDIR/$2
+		fi
+	fi
+	echo ""
+}
+
+if [ "$#" -gt 0 ]; then
+	if [ $1 = "clean" ]; then
+		ARG="clean"
+	elif [ $1 = "compile" ]; then
+		ARG="compile"
+	else
+		echo "Unknown parameter passed."
+		exit
 	fi
 else
-	SCONSARGS=$SCONSCOMPILE
+	ARG="compile"
 fi
 
-cd $BASELIBRARYDIR
-scons $SCONSARGS
-#temporal
-cp libvasik.dylib $RELEASEDIR
-
-cd $FACTORYDIR
-for plugin in $PLUGINS
-do
-	cd $FACTORYDIR/$plugin
-	scons $SCONSARGS
-	#temporal
-	cp *.so $RELEASEDIR
+DoSCONS $BASELIBRARYDIR "libvasik.dylib"
+for plugin in $PLUGINS; do
+	DoSCONS $FACTORYDIR/$plugin "*.so"
 done
-
-cd $INTERPRETERDIR
-scons $SCONSARGS
-#temporal
-cp player $RELEASEDIR
+DoSCONS $INTERPRETERDIR "player"
