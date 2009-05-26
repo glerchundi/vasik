@@ -42,7 +42,12 @@ void effect::render(double* data)
 {
 	glClear(GL_DEPTH_BUFFER_BIT|GL_COLOR_BUFFER_BIT);
 	glClearColor(0.0,0.0,0.0,1.0);
-	glViewport(0,0,width,height);						// Reset The Current Viewport	glMatrixMode(GL_PROJECTION);						// Select The Projection Matrix	glLoadIdentity();							// Reset The Projection Matrix	glOrtho(0.0f,width,height,0.0f,-1.0f,1.0f);				// Create Ortho 640x480 View (0,0 At Top Left)	glMatrixMode(GL_MODELVIEW);						// Select The Modelview Matrix	glLoadIdentity();							// Reset The Modelview Matrix
+	glViewport(0,0,width,height); // Reset The Current Viewport
+	glMatrixMode(GL_PROJECTION); // Select The Projection Matrix
+	glLoadIdentity(); // Reset The Projection Matrix
+	glOrtho(0.0f,width,height,0.0f,-1.0f,1.0f); // Create Ortho 640x480 View (0,0 At Top Left)
+	glMatrixMode(GL_MODELVIEW); // Select The Modelview Matrix
+	glLoadIdentity(); // Reset The Modelview Matrix
 	
 	if(data != NULL)
 	{
@@ -63,13 +68,12 @@ void effect::render(double* data)
 	
 	glClear(GL_DEPTH_BUFFER_BIT);
   
-	glMatrixMode(GL_PROJECTION);						// Select The Projection Matrix
-	glLoadIdentity();									// Reset The Projection Matrix
-
+	glMatrixMode(GL_PROJECTION); // Select The Projection Matrix
+	glLoadIdentity(); // Reset The Projection Matrix
 	// Calculate The Aspect Ratio Of The Window
 	gluPerspective(45.0f,(GLfloat)width/(GLfloat)height,0.1f,100.0f);
 
-	glMatrixMode(GL_MODELVIEW);							// Select The Modelview Matrix
+	glMatrixMode(GL_MODELVIEW);	// Select The Modelview Matrix
 	glLoadIdentity();
 	
     glTranslatef( 0.0f, 0.0f, -5.0f );
