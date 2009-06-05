@@ -3,9 +3,9 @@ import sys
 output = 'libvasik'
 
 sources = [ 
-            'TVasik.cc',
+            'TScript.cc',
             'TLog.cc',
-            'TPlugin.cc',
+			'TPlugin.cc',
           ]
 
 env = Environment()

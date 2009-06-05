@@ -6,7 +6,9 @@ sources = [
             output + '.cc',
             output + '.i'
           ]
-          
+
+baselibrarypath = '../../BaseLibrary/'
+
 env = Environment(tools = ['default','swig'])
 
 if env.Detect('swig') == None:
@@ -17,14 +19,14 @@ if sys.platform == 'darwin':
 	env.Append(CCFLAGS=['-D__MACOSX__'])
 	
 	env.Append(CPPPATH=['/usr/include/malloc']) ## malloc.h (Mac OS X)
-	env.Append(CPPPATH=['../../BaseLibrary/'])
+	env.Append(CPPPATH=[baselibrarypath])
 	
-	env.Append(LIBPATH=['../../BaseLibrary/'])
+	env.Append(LIBPATH=[baselibrarypath])
 	env.Append(LIBS=['vasik', 'glfw'])
 	
-	env.Replace(SWIGFLAGS='-c++ -lua')
+	env.Replace(SWIGFLAGS='-c++ -lua -I'+baselibrarypath)
 	
-	env.Replace(SHLINKFLAGS='-bundle -flat_namespace -undefined suppress')
+	env.Replace(SHLINKFLAGS='-bundle -flat_namespace -undefined dynamic_lookup')
 	env.Append(SHLINKFLAGS=' -framework Cocoa')
 	env.Append(SHLINKFLAGS=' -framework OpenGL')
 	env.Append(SHLINKFLAGS=' -framework AGL')
@@ -33,13 +35,13 @@ if sys.platform == 'darwin':
 elif sys.platform == 'linux2':
 	env.Append(CCFLAGS=['-D__LINUX__'])
 	
-	env.Append(CPPPATH=['../../BaseLibrary/'])
+	env.Append(CPPPATH=[baselibrarypath])
 
-	env.Append(LIBPATH=['../../BaseLibrary/'])
+	env.Append(LIBPATH=[baselibrarypath])
 	env.Append(LIBS=['vasik','glfw'])
 	env.Append(LIBS=['pthread','X11','Xrandr','GL','GLU'])
 
-	env.Replace(SWIGFLAGS='-c++ -lua')
+	env.Replace(SWIGFLAGS='-c++ -lua -I'+baselibrarypath)
 
 	env.Replace(SHLINKFLAGS='-shared')
 	env.Replace(SHLIBPREFIX='')

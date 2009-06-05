@@ -16,6 +16,7 @@ extern "C"
 
 #include "TLog.h"
 #include "TList.h"
+#include "TScript.h"
 #include "TPlugin.h"
 
 #ifdef __MACOSX__
@@ -23,8 +24,6 @@ extern "C"
     #include <OpenGL/CGLCurrent.h>
     #include "OpenGL/gl.h"
     #include "OpenGL/glu.h"
-
-    #include "CoreFoundation/CoreFoundation.h"
 
 	// Needed by 'soundsystem' plugin
 	#ifdef __MACH__
@@ -41,27 +40,8 @@ extern "C"
     #include "GL/glu.h"
 #endif
 
-
-#define DEBUG 1
-
-#if defined(DEBUG)
-    #define LOGTHIS(fmt, ...) TLog::log(__FILE__,__LINE__,fmt,__VA_ARGS__)
-#else
-    #define LOGTHIS(fmt, ...) 
-#endif
-
 typedef unsigned int  uint;
 typedef unsigned char uchar;
 typedef unsigned long ulong;
-
-class TVasik {
-	public:
-		TVasik();
-		TVasik(const char *name);
-		~TVasik();
-		void loadscript(const char *name);
-	private:
-        void changedir(void);
-};
 
 #endif

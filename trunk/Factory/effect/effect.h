@@ -3,21 +3,20 @@
 
 #include "TVasik.h"
 
-class effect
+class effect : public TPlugin
 {
 public:
 	// construct & destruct
 	effect();
 	~effect();
 	// plugin func's
-	void init(void);
-    void quit(void);
-	void render(void);
-    void render(double* data);
-    void print(void);
+	void 		init(void);
+    void 		quit(void);
+	int	 		render(void);
+    int	 		render(double* data);
+    int 		print(void);
 private:
 	// plugin var's
 };
 
 #endif
-

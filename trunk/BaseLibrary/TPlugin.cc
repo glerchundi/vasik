@@ -1,38 +1,68 @@
 #include "TPlugin.h"
 
 TPlugin::TPlugin() {
-	this->linked = false;
-}
-
-TPlugin::TPlugin(char *plugin) {
-	this->linked = false;
-	this->LinkPlugin(plugin);
+	funcs = new TList<ptFunc>();
+	/*plugins = new TList<TPlugin*>();*/
 }
 
 TPlugin::~TPlugin() {
 }
 
+param*
+TPlugin::execute(char *func, param* params) {
+	ptFunc f = funcs->get(func);
+	return f(params);	
+}
+
 void
-TPlugin::LinkPlugin(char *plugin) {
-	strncpy(this->pluginname, plugin, strlen(plugin));
+TPlugin::addfunc(char *func, ptFunc f) {
+	funcs->add(func, f);		
 }
 
-void*
-TPlugin::ExecuteFunction(char *func, ...) {
-	va_list ap;
+/*
+void
+TPlugin::addplugin(char *plugin, TPlugin *p) {
+	plugins->add(plugin, p);
+}
 
-	memset(string, 0, MAXCHAR);
-	sprintf(string, "%s:%s(", this->pluginname, func);
-	
-	puts(string);
+TPlugin*
+TPlugin::getplugin(char *plugin) {
+	swig_lua_userdata *data;
 
-	va_start(ap, func);
-	while(*func != '\0') {
-		sprintf(string, "%s%s,", string, va_arg(ap, char*));
+	lua_State *state = TScript::state;
+	TPlugin *p;
+	//
+	// Access to static members
+	// x = module.classname_staticmember(arg1, arg2, ...)
+	// In our case: plugin = effect.effect_getmodule(true/false);
+	//
+	if(createnew) {
+		snprintf(cmd, MAXCHAR, "%s_getmodule", plugin);
+	} else {
+		snprintf(cmd, MAXCHAR, "getinstance");
+	}	
+
+	lua_getglobal(state, plugin);
+	if(lua_type(state, -1) != LUA_TTABLE) {
+		LOGTHIS("%s is not loaded", plugin);
 	}
-	va_end(ap);
 
-	this->string[strlen(string)-1] = ')';
-	this->string[strlen(string)  ] = ';';
-	this->string[strlen(string)+1] = '\0';
+	lua_getfield(state, -1, cmd);
+	if(lua_type(state, -1) != LUA_TFUNCTION) {
+		LOGTHIS("%s module has no '%s' function", plugin, cmd);
+	}
+
+	// remove 'plugin' table from stack
+	lua_replace(state, -2);
+	//lua_pushboolean(state, createnew);
+
+	if(lua_pcall(state, 1, 1, 0) != 0) {
+		LOGTHIS("Error executing '%s': %s", cmd, lua_tostring(state, -1));
+	}
+
+	data 	= (swig_lua_userdata *)lua_touserdata(state,1);
+	p		= (TPlugin *)data->ptr;
+
+	return plugins->get(plugin);
 }
+*/

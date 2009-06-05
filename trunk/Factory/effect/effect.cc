@@ -1,11 +1,14 @@
 #include "effect.h"
 
-effect::effect()
-{
+WRAPPLUGIN(effect)
+WRAPFUNC0(_int,print)
+
+effect::effect() {
+	SHAREPLUGIN(effect);
+	SHAREFUNC(print);
 }
 
-effect::~effect()
-{
+effect::~effect() {
 }
 
 int width  = 640;
@@ -14,9 +17,8 @@ int i;
 float step = 640.0/512.0;
 float xrot=0.0,yrot=0.0,zrot=0.0;
 
-void effect::init(void)
-{
-    /* Enable smooth shading */
+void effect::init(void) {
+	/* Enable smooth shading */
     glShadeModel( GL_SMOOTH );
     /* Set the background black */
     glClearColor( 0.0f, 0.0f, 0.0f, 0.5f );
@@ -33,13 +35,12 @@ void effect::init(void)
 void effect::quit(void) {
 }
 
-void effect::render(void)
-{
+int effect::render(void) {
 	this->render(NULL);
+	return 0;
 }
 
-void effect::render(double* data)
-{
+int effect::render(double* data) {
 	glClear(GL_DEPTH_BUFFER_BIT|GL_COLOR_BUFFER_BIT);
 	glClearColor(0.0,0.0,0.0,1.0);
 	glViewport(0,0,width,height); // Reset The Current Viewport
@@ -117,11 +118,13 @@ void effect::render(double* data)
 	xrot += 0.05;
 	yrot += 0.05;
 	yrot += 0.05;
+	
+	return 0;
 }
 
 #include <stdio.h>
-void effect::print(void)
-{
+int effect::print(void) {
+	puts("test");
 	/*
 	puts("kaiiiiiixoooooooo");
 	puts("       AVG   VAR");
@@ -129,4 +132,5 @@ void effect::print(void)
 		printf("%3i: %5f %5f\n",i,davg[i],dvar[i] - davg[i]*davg[i]);
 	}
 	*/
+	return 0;
 }

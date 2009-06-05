@@ -21,7 +21,9 @@ soundsys:playstream("oasis");
 
 -- INIT IMAGESYSTEM
 imgsys:init();
---imgsys:load("perlin02","perlin01.png");
+imgsys:create("perlin01",256,256,32);
+imgsys:perlin("perlin01",2,0.5,4);
+imgsys:save("perlin01");
 
 -- INIT EFFECTS
 fx:init();
