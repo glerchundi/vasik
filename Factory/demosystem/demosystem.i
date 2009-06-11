@@ -9,6 +9,7 @@
 #include "maths/maths.h"
 #include "window/window.h"
 #include "font/font.h"
+#include "shell/shell.h"
 #include "effect/effect.h"
 %}
 
@@ -22,4 +23,5 @@
 %include "maths/maths.h"
 %include "window/window.h"
 %include "font/font.h"
+%include "shell/shell.h"
 %include "effect/effect.h"

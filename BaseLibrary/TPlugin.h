@@ -30,6 +30,7 @@ union myparam
     float*  _pfloat;
     double  _double;
     double* _pdouble;
+    void*   _pvoid;
 };
 
 #define WRAPFUNC0(r,func)                   \

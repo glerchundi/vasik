@@ -26,6 +26,8 @@ sources = [
             'font/font.cc',
             'font/glFont.cc',
 
+            'shell/shell.cc',
+
             'effect/effect.cc',
          ]
 
