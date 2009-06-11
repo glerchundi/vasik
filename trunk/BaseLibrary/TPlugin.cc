@@ -1,17 +1,23 @@
 #include "TPlugin.h"
 
 TPlugin::TPlugin() {
-	funcs = new TList<ptFunc>();
-	/*plugins = new TList<TPlugin*>();*/
+    funcs   = new TList<ptFunc>();
+    plugins = new TList<TPlugin*>();
 }
 
 TPlugin::~TPlugin() {
 }
 
 param*
-TPlugin::execute(char *func, param* params) {
-	ptFunc f = funcs->get(func);
-	return f(params);	
+TPlugin::execute(char *plugin, char *func, param* vars) {
+	TPlugin *p = plugins->get(plugin);
+	return p->execute(func, vars);	
+}
+
+param*
+TPlugin::execute(char *func, param* vars) {
+    ptFunc f = funcs->get(func);
+    return f(vars);
 }
 
 void
@@ -19,11 +25,12 @@ TPlugin::addfunc(char *func, ptFunc f) {
 	funcs->add(func, f);		
 }
 
-/*
 void
 TPlugin::addplugin(char *plugin, TPlugin *p) {
-	plugins->add(plugin, p);
+    plugins->add(plugin, p);
 }
+
+/*
 
 TPlugin*
 TPlugin::getplugin(char *plugin) {

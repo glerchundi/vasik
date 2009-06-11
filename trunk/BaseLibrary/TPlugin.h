@@ -12,8 +12,12 @@ extern "C"
     #include "lauxlib.h"
 }
 
-union param
+typedef union myparam param;
+
+union myparam
 {
+    bool    _bool;
+    bool*   _pbool;
     char    _char;
     char*   _pchar;
     short   _short;
@@ -28,97 +32,107 @@ union param
     double* _pdouble;
 };
 
-#define WRAPFUNC0(r,func)     				\
-param* wrap_##func (param* params) {		\
-	param* p=(param*)malloc(sizeof(param)); \
-	p->r=sharedplugin->func();				\
-	return p;								\
+#define WRAPFUNC0(r,func)                   \
+param* wrap_##func (param* params) {        \
+    sharedParam->r =                        \
+    sharedPlugin->func();                   \
+    return sharedParam;                     \
 }
 
-#define WRAPFUNC1(r,func,p1)				\
-param* wrap_##func (param* params) {     	\
-    param* p=(param*)malloc(sizeof(param)); \
-	p->r=sharedplugin->func	(				\
-							params.p1		\
-							);          	\
-    return p;                         		\
+#define WRAPFUNC1(r,func,p1)                \
+param* wrap_##func (param* params) {        \
+    sharedParam->r =                        \
+    sharedPlugin->func	(                   \
+                        params[0].p1        \
+                        );                  \
+    return sharedParam;                     \
 }
 
-#define WRAPFUNC2(r,func,p1,p2)				\
-param* wrap_##func (param* params) {     	\
-    param* p=(param*)malloc(sizeof(param)); \
-    p->r=sharedplugin->func	(           	\
-                        	params.p1   	\
-                        	params.p2   	\
-                        	);          	\
-    return p;                         		\
+#define WRAPFUNC2(r,func,p1,p2)             \
+param* wrap_##func (param* params) {        \
+    sharedParam->r =                        \
+    sharedPlugin->func  (                   \
+                        params[0].p1,       \
+                        params[1].p2        \
+                        );                  \
+    return sharedParam;                     \
 }
 
-#define WRAPFUNC3(r,func,p1,p2,p3)			\
-param* wrap_##func (param* params) {   		\
-    param* p=(param*)malloc(sizeof(param)); \
-	p->r=sharedplugin->func	(           	\
-                        	params.p1   	\
-                        	params.p2   	\
-                        	params.p3   	\
-                        	);          	\
-    return p;                         		\
+#define WRAPFUNC3(r,func,p1,p2,p3)          \
+param* wrap_##func (param* params) {        \
+    sharedParam->r =                        \
+    sharedPlugin->func  (                   \
+                        params[0].p1,       \
+                        params[1].p2,       \
+                        params[2].p3        \
+                        );                  \
+    return sharedParam;                     \
 }
 
-#define WRAPFUNC4(r,func,p1,p2,p3,p4)		\
-param* wrap_##func (param* params) {  		\
-    param* p=(param*)malloc(sizeof(param)); \
-    p->r=sharedplugin->func	(          		\
-                        	params.p1   	\
-                        	params.p2   	\
-                        	params.p3   	\
-                        	params.p4   	\
-                        	);          	\
-    return p;                         		\
+#define WRAPFUNC4(r,func,p1,p2,p3,p4)       \
+param* wrap_##func (param* params) {        \
+    sharedParam->r =                        \
+    sharedPlugin->func  (                   \
+                        params[0].p1,       \
+                        params[1].p2,       \
+                        params[2].p3,       \
+                        params[3].p4        \
+                        );                  \
+    return sharedParam;                     \
 }
 
-#define WRAPFUNC5(r,func,p1,p2,p3,p4,p5)	\
-param* wrap_##func (param* params) {		\
-    param* p=(param*)malloc(sizeof(param)); \
-	p->r=sharedplugin->func	(           	\
-                        	params.p1   	\
-                        	params.p2   	\
-                        	params.p3   	\
-                        	params.p4   	\
-                        	params.p5   	\
-                        	);          	\
-    return  p;                       		\
+#define WRAPFUNC5(r,func,p1,p2,p3,p4,p5)    \
+param* wrap_##func (param* params) {        \
+    sharedParam->r =                        \
+    sharedPlugin->func  (                   \
+                        params[0].p1,       \
+                        params[1].p2,       \
+                        params[2].p3,       \
+                        params[3].p4,       \
+                        params[4].p5        \
+                        );                  \
+    return  sharedParam;                    \
 }
 
-#define WRAPPLUGIN(p)						\
-p *sharedplugin;
+#define WRAPPLUGIN(p)                       \
+static param *sharedParam;                  \
+static p *sharedPlugin;
 
-#define SHAREFUNC(f)						\
-sharedplugin->addfunc(#f,&wrap_##f)
+#define SHAREFUNC(f)                        \
+sharedPlugin->addfunc(#f,&wrap_##f);
 
-#define SHAREPLUGIN(p) sharedplugin = this;	\
+#define SHAREPLUGIN(p)                      \
+sharedParam = (param*)malloc(sizeof(param));\
+sharedPlugin = this;
 
-#define MAXCHAR 1024
+#define PLUGINNAME(name)                    \
+snprintf(pluginname, MAXCHAR, "%s", name);
+
+#define PLUGINDESCR(descr)                  \
+snprintf(plugindescr, MAXCHAR, "%s", descr);
+
+#define MAXCHAR     1024
+#define MAXPARAMS   5
 
 typedef param* (*ptFunc)(param *);
 
 class TPlugin {
 public:
-	TPlugin();
-	~TPlugin();
-	
-	param* 		execute(char *func, param* params);
-	void 		addfunc(char *func, ptFunc f);
+    TPlugin();
+    ~TPlugin();
 
-	/*void addplugin(char *plugin, TPlugin* p);*/
-	/*TPlugin* getplugin(char *plugin);*/
+    param*              execute(char *plugin, char *func, param* vars);
+    param*              execute(char *func, param* vars);
+    void                addplugin(char *plugin, TPlugin *p);
+    void                addfunc(char *func, ptFunc f);
 
-private:
-	/*TList<TPlugin*> *plugins;*/
-	TList<ptFunc>	*funcs;
-	char			cmd[MAXCHAR];
-	char			pluginname[MAXCHAR];
-	char			plugindescr[MAXCHAR];
+    char                pluginname[MAXCHAR];
+    char                plugindescr[MAXCHAR];
+//private:
+	TList<ptFunc>*      funcs;
+	char                cmd[MAXCHAR];
+    // another plugins used by inherit plugin!
+    TList<TPlugin*>*    plugins;
 };
 
 #endif
