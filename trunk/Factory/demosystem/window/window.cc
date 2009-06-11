@@ -28,36 +28,24 @@ window::window(void) {
 window::~window() {
 }
 
-//========================================================================
-// WindowSizeFun() - Window size callback function
-//========================================================================
-
 void GLFWCALL
 WindowSizeFun(int w, int h) {
 }
-
-//========================================================================
-// WindowRefreshFun() - Window refresh callback function
-//========================================================================
 
 void GLFWCALL
 WindowRefreshFun(void) {
 }
 
-//========================================================================
-// MousePosFun() - Mouse position callback function
-//========================================================================
-
 void GLFWCALL
 MousePosFun(int x, int y) {
 }
 
-//========================================================================
-// MouseButtonFun() - Mouse button callback function
-//========================================================================
-
 void GLFWCALL
 MouseButtonFun(int button, int action) {
+}
+
+void GLFWCALL
+KeyboardFun(int key, int keystate) {
 }
 
 void
@@ -77,8 +65,7 @@ window::init(const char *title, int width, int height, int bpp, bool full) {
 	int mode = (this->full) ? GLFW_FULLSCREEN : GLFW_WINDOW;
 
     // Open OpenGL window
-    if(!glfwOpenWindow(this->w, this->h, 0,0,0,0, this->bpp, 0, mode))
-    {
+    if(!glfwOpenWindow(this->w, this->h, 0,0,0,0, this->bpp, 0, mode)) {
         glfwTerminate();
     }
 
@@ -92,11 +79,12 @@ window::init(const char *title, int width, int height, int bpp, bool full) {
     //glfwDisable(GLFW_AUTO_POLL_EVENTS);
 
     // Set callback functions
-    glfwSetWindowSizeCallback( WindowSizeFun );
-    glfwSetWindowRefreshCallback( WindowRefreshFun );
-    glfwSetMousePosCallback( MousePosFun );
-    glfwSetMouseButtonCallback( MouseButtonFun );
-    
+    glfwSetWindowSizeCallback(WindowSizeFun);
+    glfwSetWindowRefreshCallback(WindowRefreshFun);
+    glfwSetMousePosCallback(MousePosFun);
+    glfwSetMouseButtonCallback(MouseButtonFun);
+    glfwSetKeyCallback(KeyboardFun);
+   
     this->setupview(this->w,this->h, false);
 }
 
