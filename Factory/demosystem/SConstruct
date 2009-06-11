@@ -1,0 +1,100 @@
+import sys
+
+output = 'demosystem'
+
+sources = [
+            output+'.i',
+
+            'soundsystem/soundsystem.cc',
+            'soundsystem/src/FFT.cc',
+
+            'imagesystem/imagesystem.cc',
+            'imagesystem/src/Noise.cc',
+            'imagesystem/src/Perlin.cc',
+            'imagesystem/src/Checker.cc',  
+          
+            'scheduler/scheduler.cc',
+
+            'timer/timer.cc',
+        
+            'maths/maths.cc',
+            'maths/src/dsp.cc',
+            'maths/src/complex.cc', 
+   
+            'window/window.cc',
+
+            'font/font.cc',
+            'font/glFont.cc',
+
+            'effect/effect.cc',
+         ]
+
+baselibrarypath = '../../BaseLibrary/'
+
+env = Environment(tools = ['default','swig'])
+
+if env.Detect('swig') == None:
+    print 'No SWiG tool detected, install (www.swig.org) it or put it into the $PATH'
+    Exit()
+    
+if sys.platform == 'darwin':
+    env.Append(CCFLAGS=['-D__MACOSX__'])
+
+    env.Append(CPPPATH=[baselibrarypath])
+    
+    env.Append(LIBPATH=[baselibrarypath])
+    env.Append(LIBS=['vasik'])
+
+    # window
+    env.Append(LIBS=['glfw'])
+    # imagesystem
+    env.Append(LIBS=['freeimage'])
+    # soundsystem
+    env.Append(LIBS=['fmodx86','fftw3'])
+    # maths
+    env.Append(LIBS=['m'])
+    # font
+    env.Append(LIBS=['freetype'])
+
+    env.Replace(SWIGFLAGS='-c++ -lua -I'+baselibrarypath)
+
+    env.Replace(SHLINKFLAGS='-bundle -undefined dynamic_lookup')
+
+    env.Append(SHLINKFLAGS=' -framework Carbon');
+    env.Append(SHLINKFLAGS=' -framework Cocoa')
+    env.Append(SHLINKFLAGS=' -framework OpenGL')
+    env.Append(SHLINKFLAGS=' -framework AGL')    
+
+    env.Replace(SHLIBPREFIX='')
+    env.Replace(SHLIBSUFFIX='.so')
+elif sys.platform == 'linux2':
+    env.Append(CCFLAGS=['-D__LINUX__'])
+
+    env.Append(CPPPATH=[baselibrarypath])
+    
+    env.Append(LIBPATH=[baselibrarypath])
+    env.Append(LIBS=['vasik'])
+
+    # window
+    env.Append(LIBS=['glfw'])
+    env.Append(LIBS=['pthread','X11','Xrandr','GL','GLU'])
+    # imagesystem
+    env.Append(LIBS=['freeimage'])
+    env.Append(LIBS=['GL','GLU'])
+    # soundsystem
+    env.Append(LIBS=['fmodx86','fftw3'])
+    # maths
+    env.Append(LIBS=['m'])
+    # font
+    env.Append(LIBS=['freetype'])
+
+    env.Replace(SWIGFLAGS='-c++ -lua -I'+baselibrarypath)
+
+    env.Replace(SHLINKFLAGS='-shared')
+
+    env.Replace(SHLIBPREFIX='')
+    env.Replace(SHLIBSUFFIX='.so')
+
+objs = env.SharedObject(sources)
+
+env.SharedLibrary(output,objs)
