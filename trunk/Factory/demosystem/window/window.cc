@@ -1,5 +1,8 @@
 #include "window.h"
 
+typedef int (ptKeyboardFunc)(int, int);
+TList<ptKeyboardFunc*>* keyboardCallbacks;
+
 WRAPPLUGIN(window)
 WRAPFUNC3(_int,setupview,_int,_int,_bool)
 WRAPFUNC0(_int,clear)
@@ -7,6 +10,7 @@ WRAPFUNC0(_int,cleardepth)
 WRAPFUNC0(_int,clearcolor)
 WRAPFUNC0(_int,getwidth)
 WRAPFUNC0(_int,getheight)
+WRAPFUNC1(_int,addkeyboardcallback,_pvoid)
 WRAPFUNC0(_bool,isfinished)
 WRAPFUNC0(_int,swapbuffers)
 
@@ -18,11 +22,13 @@ window::window(void) {
     SHAREFUNC(clearcolor);
     SHAREFUNC(getwidth);
     SHAREFUNC(getheight);
+    SHAREFUNC(addkeyboardcallback);
     SHAREFUNC(isfinished);
     SHAREFUNC(swapbuffers);
 
-	this->finished = false;
-	memset(keys,0,512);
+    keyboardCallbacks = new TList<ptKeyboardFunc*>();
+	
+    this->finished = false;
 }
 
 window::~window() {
@@ -44,8 +50,35 @@ void GLFWCALL
 MouseButtonFun(int button, int action) {
 }
 
+void
+KeyboardFun(bool isKey, int key, int keystate) {
+    bool doCallback = false;
+    int i, s = keyboardCallbacks->size();
+
+    if(isKey  && key > 255) doCallback = true;
+    if(!isKey && key < 256) doCallback = true;
+
+    if(doCallback) {
+        for(i = 0 ; i < s ; i++) {
+            ptKeyboardFunc *pt = keyboardCallbacks->get(i);
+            pt(key, keystate);
+        }
+    }
+}
+
 void GLFWCALL
-KeyboardFun(int key, int keystate) {
+KeyboardKeyFun(int key, int keystate) {
+    KeyboardFun(true, key,keystate);
+}
+
+void GLFWCALL
+KeyboardCharFun(int key, int keystate) {
+    KeyboardFun(false, key,keystate);
+}
+
+void
+window::initplugin(char *name, TPlugin *plugin) {
+    this->addplugin(name, plugin);
 }
 
 void
@@ -71,8 +104,10 @@ window::init(const char *title, int width, int height, int bpp, bool full) {
 
     // Set window title
     glfwSetWindowTitle(title);
-    // Enable sticky keys
+    // Enable sticky,repeated and special keys
     glfwEnable(GLFW_STICKY_KEYS);
+    //glfwEnable(GLFW_KEY_REPEAT);
+    glfwEnable(GLFW_SYSTEM_KEYS);
     // Enable mouse cursor (only needed for fullscreen mode)
     glfwEnable(GLFW_MOUSE_CURSOR);
     // Disable automatic event polling
@@ -83,7 +118,8 @@ window::init(const char *title, int width, int height, int bpp, bool full) {
     glfwSetWindowRefreshCallback(WindowRefreshFun);
     glfwSetMousePosCallback(MousePosFun);
     glfwSetMouseButtonCallback(MouseButtonFun);
-    glfwSetKeyCallback(KeyboardFun);
+    glfwSetKeyCallback(KeyboardKeyFun);
+    glfwSetCharCallback(KeyboardCharFun);
    
     this->setupview(this->w,this->h, false);
 }
@@ -152,6 +188,12 @@ window::getheight(void) {
 }
 
 int
+window::addkeyboardcallback(void *function) {
+    ptKeyboardFunc *pt = (ptKeyboardFunc *)function;
+    keyboardCallbacks->add(NULL, pt);
+}
+
+int
 window::swapbuffers(void) {
     glfwSwapBuffers();
 }
@@ -159,13 +201,4 @@ window::swapbuffers(void) {
 bool
 window::isfinished(void) {
 	return glfwGetKey(GLFW_KEY_ESC) && glfwGetWindowParam(GLFW_OPENED);
-}
-
-void
-window::eventhandler(void) {
-}
-
-bool
-window::getkeystate(int keysym) {
-	return keys[keysym];
 }
