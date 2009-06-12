@@ -11,6 +11,7 @@ public:
 	window();
 	~window();
 	// plugin func's
+    void    initplugin(char *name, TPlugin *plugin);
 	void    init(const char *title, int width, int height, int bpp, bool full);
 	void    quit(void);
 	
@@ -20,17 +21,15 @@ public:
     int     clearcolor(void);
     int     getwidth(void);
     int     getheight(void);
+    int     addkeyboardcallback(void *);
 	int     swapbuffers(void);
 
 	bool    isfinished(void);
-	void    eventhandler(void);
-	bool    getkeystate(int keysym);
 private:
 	// plugin var's
-	int   w,h,bpp;
-	int   view_w,view_h;
-	bool  full,finished;
-	bool  keys[512];
+	int     w,h,bpp;
+	int     view_w,view_h;
+	bool    full,finished;
 };
 
 #endif
