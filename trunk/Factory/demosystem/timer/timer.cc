@@ -22,6 +22,11 @@ timer::~timer() {
 }
 
 void
+timer::initplugin(char *name, TPlugin *plugin) {
+    this->addplugin(name, plugin);
+}
+
+void
 timer::init(int numTimers) {
     if(starttime != NULL) {
         delete [] starttime;

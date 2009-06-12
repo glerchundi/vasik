@@ -56,11 +56,15 @@ soundsystem::soundsystem(void) {
 soundsystem::~soundsystem() {
 }
 
-int
+void
+soundsystem::initplugin(char *name, TPlugin *plugin) {
+    this->addplugin(name, plugin);
+}
+
+void
 soundsystem::init(void) {
     if (!FSOUND_Init(samplerate, 32, FSOUND_INIT_USEDEFAULTMIDISYNTH)) {
         LOGTHIS("%s\n", FMOD_ErrorString(FSOUND_GetError()));
-        return 1;
     }
 }
 
@@ -277,7 +281,7 @@ soundsystem::detectbeat(char *name) {
 	memset(V ,0,subbands*sizeof(float));
 	
 	CurrentMs = FSOUND_Stream_GetTime(streams.get(name));
-	//if(CurrentMs-LastMs > 25) {
+	if(CurrentMs-LastMs > 25) {
 		B = this->getspectrum();
 		for(i = 0 ; i < subbands ; i++) {
 			la = 0; for(k = 0 ; k <= i-1 ; k++) la += EnergyBandsize[k];
@@ -319,5 +323,5 @@ soundsystem::detectbeat(char *name) {
 			}
 		}
 		LastMs = CurrentMs;
-	//}
+	}
 }

@@ -11,6 +11,7 @@ public:
 	font();
 	~font();
 	// plugin func's
+    void    initplugin(char *name, TPlugin *plugin);
 	void    init(void);
 	void    quit(void);
 	// other wrapping func's
@@ -18,6 +19,8 @@ public:
     int     setFont(char *fontname, int size);
     int     setColor(float r, float g, float b, float a);
     int     drawText(int x, int y, char *fmt, ...);
+    int     getHeight(void);
+    int     getWidth(char *fmt, ...);
 private:
 	// plugin var's
 	//

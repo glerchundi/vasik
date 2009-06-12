@@ -27,7 +27,8 @@ public:
     soundsystem();
     ~soundsystem();
     // plugin func's
-    int     init(void);
+    void    initplugin(char *name, TPlugin *plugin);
+    void    init(void);
     void    quit(void);    
     void    loadmodule(char *name, const char *path);
     void    loadstream(char *name, const char *path);

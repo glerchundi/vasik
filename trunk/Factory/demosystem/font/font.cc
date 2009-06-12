@@ -4,12 +4,16 @@ WRAPPLUGIN(font)
 WRAPFUNC2(_int,setFont,_pchar,_int)
 WRAPFUNC4(_int,setColor,_float,_float,_float,_float)
 WRAPFUNC3(_int,drawText,_int,_int,_pchar)
+WRAPFUNC0(_int,getHeight)
+WRAPFUNC1(_int,getWidth,_pchar);
 
 font::font() {
     SHAREPLUGIN(font);
     SHAREFUNC(setFont);
     SHAREFUNC(setColor);
     SHAREFUNC(drawText);
+    SHAREFUNC(getHeight);
+    SHAREFUNC(getWidth);
 
     color[0] = 
     color[1] = 
@@ -20,6 +24,11 @@ font::font() {
 }
 
 font::~font() {
+}
+
+void
+font::initplugin(char *name, TPlugin *plugin) {
+    this->addplugin(name, plugin);
 }
 
 void
@@ -60,4 +69,22 @@ font::drawText(int x, int y, char *fmt, ...) {
     vsnprintf(text, sizeof(text), fmt, args);
     fnt->drawText(x,y,"%s",text);
     va_end(args);
+}
+
+int
+font::getHeight(void) {
+    return fnt->getHeight();
+}
+
+int
+font::getWidth(char *fmt, ...) {
+    int ret;
+    va_list args;
+
+    va_start(args, fmt);
+    vsnprintf(text, sizeof(text), fmt, args);
+    ret = fnt->calcStringWidth(text);
+    va_end(args);
+
+    return ret; 
 }
