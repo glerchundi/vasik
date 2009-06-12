@@ -22,6 +22,7 @@ public:
 
     static void dumpstack(void);
     static void load(const char *name);
+    static void dostring(const char *cmd, char *error);
 private:
     static void changedir(void);
 };

@@ -25,7 +25,7 @@ TScript::load(const char *name) {
 	changedir();
 
 	// log date&time
-	char timestamp[100];  
+	char timestamp[128];  
 	time_t mytime;  
 	struct tm *mytm;  
 	mytime=time(NULL);  
@@ -57,6 +57,17 @@ TScript::load(const char *name) {
 	 
 	// Clean up Lua
 	lua_close(state);
+}
+
+void
+TScript::dostring(const char *cmd, char *error) {
+    int status;
+    status = luaL_dostring(state, cmd);
+    if(status != 0) {
+        snprintf(error,256,"%s",lua_tostring(state, -1));
+    } else {
+        snprintf(error,256,"");
+    }
 }
 
 void
