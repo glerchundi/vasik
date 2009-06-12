@@ -34,6 +34,7 @@ union myparam
 };
 
 #define WRAPFUNC0(r,func)                   \
+static                                      \
 param* wrap_##func (param* params) {        \
     sharedParam->r =                        \
     sharedPlugin->func();                   \
@@ -41,6 +42,7 @@ param* wrap_##func (param* params) {        \
 }
 
 #define WRAPFUNC1(r,func,p1)                \
+static                                      \
 param* wrap_##func (param* params) {        \
     sharedParam->r =                        \
     sharedPlugin->func	(                   \
@@ -50,6 +52,7 @@ param* wrap_##func (param* params) {        \
 }
 
 #define WRAPFUNC2(r,func,p1,p2)             \
+static                                      \
 param* wrap_##func (param* params) {        \
     sharedParam->r =                        \
     sharedPlugin->func  (                   \
@@ -60,6 +63,7 @@ param* wrap_##func (param* params) {        \
 }
 
 #define WRAPFUNC3(r,func,p1,p2,p3)          \
+static                                      \
 param* wrap_##func (param* params) {        \
     sharedParam->r =                        \
     sharedPlugin->func  (                   \
@@ -71,6 +75,7 @@ param* wrap_##func (param* params) {        \
 }
 
 #define WRAPFUNC4(r,func,p1,p2,p3,p4)       \
+static                                      \
 param* wrap_##func (param* params) {        \
     sharedParam->r =                        \
     sharedPlugin->func  (                   \
@@ -83,6 +88,7 @@ param* wrap_##func (param* params) {        \
 }
 
 #define WRAPFUNC5(r,func,p1,p2,p3,p4,p5)    \
+static                                      \
 param* wrap_##func (param* params) {        \
     sharedParam->r =                        \
     sharedPlugin->func  (                   \
