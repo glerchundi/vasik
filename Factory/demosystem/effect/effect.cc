@@ -20,7 +20,13 @@ effect::effect() {
 effect::~effect() {
 }
 
-void effect::init(void) {
+void
+effect::initplugin(char *name, TPlugin *plugin) {
+    this->addplugin(name, plugin);
+}
+
+void
+effect::init(void) {
     /* Enable smooth shading */
     glShadeModel( GL_SMOOTH );
     /* Set the background black */
@@ -35,27 +41,17 @@ void effect::init(void) {
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
 }
 
-void effect::initplugin(char *name, TPlugin *plugin) {
-    this->addplugin(name, plugin);
+void
+effect::quit(void) {
 }
 
-void effect::quit(void) {
-}
-
-/* RANDOMIZE */
-
-float random(int max_value)
-{
+float
+random(int max_value) {
     return (float)(rand() % max_value);
 }
 
-/*******************************************************************
-    BUILD LISTS
-*******************************************************************/
-//GLuint cube;
-
-void DaCube(float altura)                   // Build Box Display List
-{ 
+void
+DaCube(float altura) { 
     glBegin(GL_QUADS);                          // Start Drawing Quads
         glNormal3f( 0.0f, 0.0f, 1.0f);                  // Normal Pointing Towards Viewer
         glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);
@@ -96,12 +92,10 @@ void DaCube(float altura)                   // Build Box Display List
 
 }
 
-/* SCALE SYNCH */
-
 float num;
 
-void PutCubes(long time)
-{
+void
+PutCubes(long time) {
     int i,j,cnt = 0;
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     
@@ -140,8 +134,8 @@ void PutCubes(long time)
     glEnable(GL_LIGHTING);
 }
 
-int effect::setup(void)
-{
+int
+effect::setup(void) {
     GLfloat fogColor[4]         = {0.25f, 0.25f, 0.25f, 1.0f};
 
     GLfloat LightAmbient[]      = { 1.0f, 0.0f, 0.0f, 1.0f }; 
@@ -196,12 +190,11 @@ int effect::setup(void)
     return 0;
 }
 
-int effect::render(void)
-{
+int
+effect::render(void) {
     int i;
 
-    if(_setup == false)
-    {
+    if(_setup == false) {
         this->setup();
         _setup = true;
     }
@@ -215,30 +208,21 @@ int effect::render(void)
 
     vars[0]._int    = windowWidth;
     vars[1]._int    = windowHeight;
-    vars[2]._bool   = true;
-    execute("window","setupview",vars);
-
-    vars[0]._int    = 20;
-    vars[1]._int    = 20;
-    vars[2]._pchar  = "THIS IS MY...testing font....";
-    execute("font","drawText",vars);
-
-    vars[0]._int    = windowWidth;
-    vars[1]._int    = windowHeight;
     vars[2]._bool   = false;
     execute("window","setupview",vars);
 
     glDisable(GL_BLEND);
     glEnable(GL_FOG);
     glEnable(GL_LIGHTING);
-    for(i=0;i< MAX_CUBES ; i++)
+    for(i=0;i< MAX_CUBES ; i++) {
         cube_tmp1[i] = cube_altu[i] + 1.0f + sin(ms/125.0f + i);
+    }
 
-    for(i=0;i<MAX_CUBES ; i++)
-    {
+    for(i=0;i<MAX_CUBES ; i++) {
         cube_tmp2[i] = cube_altu[i];
         cube_altu[i] = cube_tmp1[i];
     }
+
     PutCubes(ms);
     
     for(i=0;i<MAX_CUBES ; i++)

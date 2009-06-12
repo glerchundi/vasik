@@ -12,6 +12,7 @@ public:
 	timer();
 	~timer();
 	// plugin func's
+    void        initplugin(char *name, TPlugin *plugin);
 	void        init(int numTimers = DEFAULT_TIMERS);
 	void        quit(void);
 	// other wrapping func's

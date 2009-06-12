@@ -11,6 +11,7 @@
 
 class maths : public TPlugin {
 public:
+
 };
 
 #endif

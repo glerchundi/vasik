@@ -13,12 +13,19 @@ imagesystem::imagesystem() {
 imagesystem::~imagesystem() {
 }
 
-void imagesystem::init(void) {
+void
+imagesystem::initplugin(char *name, TPlugin *plugin) {
+    this->addplugin(name, plugin);
+}
+
+void
+imagesystem::init(void) {
 	FreeImage_Initialise();
 	FreeImage_SetOutputMessage(FreeImageErrorHandler);
 }
 
-void imagesystem::quit(void) {
+void
+imagesystem::quit(void) {
 	int i;
 	for(i = 0 ; i < images.size() ; i++) {
 		MYBITMAP *dib = images.get(i);
@@ -28,7 +35,8 @@ void imagesystem::quit(void) {
 	FreeImage_DeInitialise();
 }
 
-void imagesystem::load(char *name, char *filename) {
+void
+imagesystem::load(char *name, char *filename) {
 	FREE_IMAGE_FORMAT fif = FIF_UNKNOWN; 
 
 	fif = FreeImage_GetFileType(filename, 0); 

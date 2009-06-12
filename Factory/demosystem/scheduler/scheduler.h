@@ -22,8 +22,8 @@ public:
 	scheduler();
 	~scheduler();
 	// plugin func's
-	void    init(int layers);
     void    initplugin(char *name, TPlugin *plugin);
+    void    init(int layers);
 	void    quit(void);
 
     int     addfx(int layer, int t1, int t2, char *plugin, char *func, param *vars = NULL);

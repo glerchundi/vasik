@@ -9,9 +9,9 @@ public:
 	// construct & destruct
 	effect();
 	~effect();
-	// plugin func's
-	void 		init(void);
+	// plugin func'
     void        initplugin(char *name, TPlugin *plugin);
+	void 		init(void);
     void 		quit(void);
 
 	int	 		render(void);
