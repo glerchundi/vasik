@@ -49,6 +49,8 @@
 #include <cstdarg>
 #include <sstream>
 
+#include <stdarg.h>
+
 class FTLibraryContainer
 {
 public:

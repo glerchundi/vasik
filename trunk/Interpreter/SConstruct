@@ -9,24 +9,38 @@ sources = [
 env = Environment()
 
 if sys.platform == 'darwin':
-	env.Append(CCFLAGS=['-D__MACOSX__'])
+    env.Append(CCFLAGS=['-D__MACOSX__'])
 
-	env.Append(CPPPATH=['../BaseLibrary/'])
+    env.Append(CPPPATH=['../BaseLibrary/'])
+    
+    env.Append(LIBPATH=['../BaseLibrary/'])
+    env.Append(LIBS=['vasik'])
+    
+    env.Append(LINKFLAGS='-framework Cocoa')
+    
+    AddPreAction(sources, "export MACOSX_DEPLOYMENT_TARGET='10.4'")
 
-	env.Append(LIBPATH=['../BaseLibrary/'])
-	env.Append(LIBS=['vasik'])
-
-	env.Append(LINKFLAGS='-framework Cocoa')
-	
-	AddPreAction(sources, "export MACOSX_DEPLOYMENT_TARGET='10.4'")
+    target = env.Program(output, env.Object(sources))
 elif sys.platform == 'linux2':
-	env.Append(CCFLAGS=['-D__LINUX__'])
+    env.Append(CCFLAGS=['-D__LINUX__'])
+    
+    env.Append(CPPPATH=['../BaseLibrary/'])
+    
+    env.Append(LIBPATH=['../BaseLibrary/'])
+    env.Append(LIBS=['vasik'])
+    
+    env.Append(LINKFLAGS='-Wl,-rpath,./')
 
-	env.Append(CPPPATH=['../BaseLibrary/'])
+    target = env.Program(output, env.Object(sources))
+elif sys.platform == 'win32':
+    env.Append(CPPDEFINES=['__WIN32__'])
 
-	env.Append(LIBPATH=['../BaseLibrary/'])
-	env.Append(LIBS=['vasik'])
-	
-	env.Append(LINKFLAGS='-Wl,-rpath,./')
+    env.Append(CPPFLAGS=['/EHsc'])
+    env.Append(CPPFLAGS=['/MT'])
 
-tgt = env.Program(output, env.Object(sources))
+    env.Append(CPPPATH=['../BaseLibrary/'])
+
+    env.Append(LIBPATH=['../BaseLibrary/'])
+    env.Append(LIBS=['vasik'])
+    
+    target = env.Program(output, env.Object(sources))

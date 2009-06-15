@@ -1,10 +1,10 @@
 #ifndef PERLIN_H__
 #define PERLIN_H__
 
-#include "FreeImage.h"
-
 #include "TVasik.h"
 #include "Noise.h"
+
+#include "FreeImage.h"
 
 class Perlin
 {

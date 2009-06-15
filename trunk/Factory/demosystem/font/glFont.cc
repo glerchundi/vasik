@@ -37,6 +37,8 @@
 
 #include "glFont.h"
 
+static int Max(int a, int b) { return (((a) > (b)) ? (a) : (b)); }
+
 // static members
 FT_Library FTLibraryContainer::library_;
 FTLibraryContainer glFont::library_;
@@ -142,8 +144,8 @@ void glFont::open(const std::string& filename, unsigned int size)
         }
         lineSpace -= widths_[ch];
 
-        maxAscent = std::max(face->glyph->bitmap_top, maxAscent);
-        maxDescent = std::max(face->glyph->bitmap.rows -
+        maxAscent = Max(face->glyph->bitmap_top, maxAscent);
+        maxDescent = Max(face->glyph->bitmap.rows -
                                 face->glyph->bitmap_top, maxDescent);
     }
 
@@ -267,7 +269,7 @@ void glFont::drawText(float x, float y, const char *str, ...) const
     char buf[1024];
 
     va_start(args,str);
-    std::vsnprintf(buf, 1024, str, args);   // avoid buffer overflow
+    vsnprintf(buf, 1024, str, args);   // avoid buffer overflow
     va_end(args);
 
     glBindTexture(GL_TEXTURE_2D, texID_);

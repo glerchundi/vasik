@@ -1,6 +1,19 @@
 #ifndef TLOG_H__
 #define TLOG_H__
 
+#ifdef __WIN32__
+    #ifdef EXPORTAPI
+        #define VASIKAPI __declspec(dllexport)    
+    #else
+        #define VASIKAPI __declspec(dllimport)
+    #endif    
+#else
+    #define VASIKAPI
+#endif
+
+#ifndef __WIN32__
+    #include <unistd.h>
+#endif
 #include <stdio.h>
 #include <stdarg.h>
 
@@ -19,7 +32,7 @@ extern "C"
     #include "lauxlib.h"
 }
 
-class TLog
+class VASIKAPI TLog
 {
 public:
 	static void log(const char *file, const int line, const char *fmt, ...);

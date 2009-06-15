@@ -45,6 +45,7 @@ scheduler::addfx(int layer, int t1, int t2, char *plugin, char *func, param *var
     else {
         // error
     }
+    return 0;
 }
 
 int
@@ -95,4 +96,5 @@ scheduler::play(int delayMs) {
         ret         = execute("window","isfinished",NULL);
         isFinished  = ret->_bool;
     } while (!isFinished);
+    return 0;
 }

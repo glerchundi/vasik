@@ -1,32 +1,65 @@
 import sys
 
-output = 'libvasik'
+output = 'vasik'
 
 sources = [ 
             'TScript.cc',
             'TLog.cc',
-			'TPlugin.cc',
+            'TPlugin.cc',
           ]
 
 env = Environment()
 
+def checkTool(env,tool):
+    if env.Detect(tool) == None:
+        print "No '"+tool+"' tool detected, install it or put it into the $PATH"
+        Exit()
+
 if sys.platform == 'darwin':
-    env.Append(CCFLAGS=['-D__MACOSX__'])
+    env.Append(CPPDEFINES=['__MACOSX__'])
 
     env.Append(LIBS=['lua'])
 
     env.Replace(SHLINKFLAGS='-dynamiclib -undefined dynamic_lookup')
-    env.Replace(SHLIBPREFIX='')
+    env.Replace(SHLIBPREFIX='lib')
     env.Replace(SHLIBSUFFIX='.dylib')
+
+    objs = env.SharedObject(sources)
+    target = env.SharedLibrary(output,objs)
 elif sys.platform == 'linux2':
-    env.Append(CCFLAGS=['-D__LINUX__'])
+    env.Append(CPPDEFINES=['__LINUX__'])
 
     env.Append(LIBS=['lua','dl'])
 
     env.Replace(SHLINKFLAGS='-shared')
-    env.Replace(SHLIBPREFIX='')
+    env.Replace(SHLIBPREFIX='lib')
     env.Replace(SHLIBSUFFIX='.so')
 
-objs = env.SharedObject(sources)
+    objs = env.SharedObject(sources)
+    target = env.SharedLibrary(output,objs)
+elif sys.platform == 'win32':
+    checkTool(env,'mt')
 
-env.SharedLibrary(output,objs)
+    env.Append(CPPDEFINES=['__WIN32__',])
+    env.Append(CPPDEFINES=[('_SECURE_SCL',0)])
+    env.Append(CPPDEFINES=['EXPORTAPI'])
+
+    env.Append(CPPFLAGS=['/EHsc'])
+    env.Append(CPPFLAGS=['/MT'])
+
+    env.Append(LIBS=['lua5.1'])
+
+    env.Replace(SHLINKFLAGS='')
+    env.Append(SHLINKFLAGS=['/def:lua5.1.def']) 
+    env.Append(SHLINKFLAGS=['/dll'])
+    env.Append(SHLINKFLAGS=['/nodefaultlib:libcmt.lib'])
+    env.Append(SHLINKFLAGS=['/opt:noref'])
+
+    env.Replace(SHLIBPREFIX='')
+    env.Replace(SHLIBSUFFIX='.dll')
+
+    objs = env.SharedObject(sources)
+    target = env.SharedLibrary(output,objs)
+
+    env.AddPostAction(target, 'mt.exe -nologo -manifest ${TARGET}.manifest -outputresource:$TARGET;2')
+    env.Clean(target, output+'.dll.manifest')

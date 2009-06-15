@@ -45,6 +45,8 @@ font::setFont(char *fontname, int size) {
         delete fnt;
     }
     fnt = new glFont(fontname, size);
+
+    return 0;
 }
 
 int
@@ -53,6 +55,8 @@ font::setColor(float r, float g, float b, float a) {
     color[1] = g;
     color[2] = b;
     color[3] = a;
+
+    return 0;
 }
 
 int
@@ -69,6 +73,8 @@ font::drawText(int x, int y, char *fmt, ...) {
     vsnprintf(text, sizeof(text), fmt, args);
     fnt->drawText(x,y,"%s",text);
     va_end(args);
+
+    return 0;
 }
 
 int

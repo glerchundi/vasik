@@ -48,6 +48,7 @@ timer::createTimer(void) {
 int
 timer::start(int timerId) {
     starttime[timerId] = this->getTicks();
+    return 0;
 }
 
 TIMER_INT

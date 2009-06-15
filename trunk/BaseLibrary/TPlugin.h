@@ -1,6 +1,16 @@
 #ifndef TPLUGIN_H__
 #define TPLUGIN_H__
 
+#ifdef __WIN32__
+    #ifdef EXPORTAPI
+        #define VASIKAPI __declspec(dllexport)    
+    #else
+        #define VASIKAPI __declspec(dllimport)
+    #endif    
+#else
+    #define VASIKAPI
+#endif
+
 #include "TLog.h"
 #include "TScript.h"
 #include "TList.h"
@@ -113,17 +123,17 @@ sharedParam = (param*)malloc(sizeof(param));\
 sharedPlugin = this;
 
 #define PLUGINNAME(name)                    \
-snprintf(pluginname, MAXCHAR, "%s", name);
+snprintf(pluginname, MAXCHARSIZE, "%s", name);
 
 #define PLUGINDESCR(descr)                  \
-snprintf(plugindescr, MAXCHAR, "%s", descr);
+snprintf(plugindescr, MAXCHARSIZE, "%s", descr);
 
-#define MAXCHAR     1024
+#define MAXCHARSIZE 1024
 #define MAXPARAMS   5
 
 typedef param* (*ptFunc)(param *);
 
-class TPlugin {
+class VASIKAPI TPlugin {
 public:
     TPlugin();
     ~TPlugin();
@@ -133,11 +143,11 @@ public:
     void                addplugin(char *plugin, TPlugin *p);
     void                addfunc(char *func, ptFunc f);
 
-    char                pluginname[MAXCHAR];
-    char                plugindescr[MAXCHAR];
+    char                pluginname[MAXCHARSIZE];
+    char                plugindescr[MAXCHARSIZE];
 //private:
 	TList<ptFunc>*      funcs;
-	char                cmd[MAXCHAR];
+        char                cmd[MAXCHARSIZE];
     // another plugins used by inherit plugin!
     TList<TPlugin*>*    plugins;
 };

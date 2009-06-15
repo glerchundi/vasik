@@ -3,8 +3,10 @@
 
 #include <math.h>
 #include <stdlib.h>
-//#include "FreeImage.h"
 
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846264338327
+#endif
 // Prime numbers for random number generation
 #define prime1 15731
 #define prime2 789221

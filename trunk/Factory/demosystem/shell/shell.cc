@@ -71,6 +71,8 @@ onKey(int key, int keystate) {
                 break;
         }
     }
+
+    return 0;
 }
 
 WRAPPLUGIN(shell)
@@ -129,11 +131,15 @@ shell::quit(void) {
 int
 shell::onTop(void) {
     yPosition = 0;
+
+    return 0;
 }
 
 int
 shell::onBottom(void) {
     yPosition = windowHeight - yOffset;
+
+    return 0;
 }
 
 int
@@ -172,4 +178,5 @@ shell::render(void) {
     vars[2]._pchar  = errorStr;
     execute("font","drawText",vars);
 
+    return 0;
 }

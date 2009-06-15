@@ -92,7 +92,8 @@ public:
 		int number = getnumber(name);
 		if(number != -1)
 			return get(number);
-	};
+            return NULL; 
+        };
 
 	T get(int number)
 	{
