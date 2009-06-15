@@ -23,6 +23,7 @@ checkTool(env,'swig')
 if sys.platform == 'darwin':
     env.Append(CPPDEFINES=['__MACOSX__'])
 
+    env.Append(CPPPATH=['/usr/include/malloc']) # malloc.h
     env.Append(CPPPATH=[baselibrarypath])
 
     env.Append(LIBPATH=[baselibrarypath])
