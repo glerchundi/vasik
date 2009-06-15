@@ -1,4 +1,5 @@
 import sys
+import os
 
 output = 'demosystem'
 
@@ -33,14 +34,18 @@ sources = [
 
 baselibrarypath = '../../BaseLibrary/'
 
-env = Environment(tools = ['default','swig'])
+env = Environment(tools = ['default','swig'],
+                  ENV   = {'PATH' : os.environ['PATH']})
 
-if env.Detect('swig') == None:
-    print 'No SWiG tool detected, install (www.swig.org) it or put it into the $PATH'
-    Exit()
-    
+def checkTool(env,tool):
+    if env.Detect(tool) == None:
+        print "No '"+tool+"' tool detected, install it or put it into the $PATH"
+        Exit()
+
+checkTool(env,'swig')
+
 if sys.platform == 'darwin':
-    env.Append(CCFLAGS=['-D__MACOSX__'])
+    env.Append(CPPDEFINES=['__MACOSX__'])
 
     env.Append(CPPPATH=[baselibrarypath])
     
@@ -69,8 +74,11 @@ if sys.platform == 'darwin':
 
     env.Replace(SHLIBPREFIX='')
     env.Replace(SHLIBSUFFIX='.so')
+
+    objs = env.SharedObject(sources)
+    target = env.SharedLibrary(output,objs)
 elif sys.platform == 'linux2':
-    env.Append(CCFLAGS=['-D__LINUX__'])
+    env.Append(CPPDEFINES=['__LINUX__'])
 
     env.Append(CPPPATH=[baselibrarypath])
     
@@ -97,6 +105,59 @@ elif sys.platform == 'linux2':
     env.Replace(SHLIBPREFIX='')
     env.Replace(SHLIBSUFFIX='.so')
 
-objs = env.SharedObject(sources)
+    objs = env.SharedObject(sources)
+    target = env.SharedLibrary(output,objs)
+elif sys.platform == 'win32':
+    checkTool(env,'mt')
 
-env.SharedLibrary(output,objs)
+    env.Append(CPPDEFINES=['__WIN32__'])
+    env.Append(CPPDEFINES=[('_SECURE_SCL',0)])
+
+    # say to freeimage we're linking to the static library
+    env.Append(CPPDEFINES=['FREEIMAGE_LIB'])
+    # say to glfw we're linking to the static library
+    env.Append(CPPDEFINES=['GLFW_EXPORTS'])
+    # say to glfw we're building a wrapper dll not an exe
+    env.Append(CPPDEFINES=['GLFW_BUILD_DLL'])
+
+    env.Append(CPPFLAGS=['/EHsc'])
+    env.Append(CPPFLAGS=['/MT'])
+
+    env.Append(CPPPATH=[baselibrarypath])
+
+    env.Append(LIBPATH=[baselibrarypath])
+    env.Append(LIBS=['vasik'])
+
+    # window
+    env.Append(LIBS=['glfw'])
+    env.Append(LIBS=['opengl32','glu32'])
+    # imagesystem
+    env.Append(LIBS=['freeimage'])
+    env.Append(LIBS=['opengl32','glu32'])
+    # soundsystem
+    env.Append(LIBS=['fmodvc','fftw3'])
+    # font
+    env.Append(LIBS=['freetype'])
+
+    env.Append(LIBS=['user32'])   # glfw,fmod: ...
+    env.Append(LIBS=['advapi32']) # fmod: RegCloseKey
+    env.Append(LIBS=['ole32'])    # fmod: CoInitialize
+    env.Append(LIBS=['msacm32'])  # fmod: acmStreamOpen
+    env.Append(LIBS=['wsock32'])  # fmod: inet_ntoa
+    env.Append(LIBS=['winmm'])    # fmod: mixerOpen
+
+    env.Replace(SWIGFLAGS='-c++ -lua -I'+baselibrarypath)
+
+    env.Replace(SHLINKFLAGS='');
+    env.Append(SHLINKFLAGS=['/ltcg'])
+    env.Append(SHLINKFLAGS=['/dll'])
+    env.Append(SHLINKFLAGS=['/nodefaultlib:libcmt.lib'])
+    env.Append(SHLINKFLAGS=['/nodefaultlib:libc.lib'])
+    env.Replace(SHLIBPREFIX='')
+    env.Replace(SHLIBSUFFIX='.dll')
+
+    objs = env.SharedObject(sources)
+    target = env.SharedLibrary(output,objs)
+
+    env.AddPostAction(target, 'mt.exe -nologo -manifest ${TARGET}.manifest -outputresource:$TARGET;2')
+    env.Clean(target, output+'.dll.manifest')

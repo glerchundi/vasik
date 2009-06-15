@@ -21,6 +21,8 @@ extern "C" {
 #define DETECTBEAT_LINEAR      1
 #define DETECTBEAT_EXPONENTIAL 2
 
+#define round(x) ((x-floor(x))>0.5?ceil(x):floor(x))
+
 class soundsystem : public TPlugin {
 public:
     // construct & destruct

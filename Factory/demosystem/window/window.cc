@@ -160,21 +160,29 @@ window::setupview(int width, int height, bool ortho) {
     }
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
+    return 0;
 }
 
 int
 window::clear(void) {
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+    return 0;
 }
 
 int
 window::cleardepth(void) {
     glClear(GL_DEPTH_BUFFER_BIT);
+
+    return 0;
 }
 
 int
 window::clearcolor(void) {
     glClear(GL_COLOR_BUFFER_BIT);
+
+    return 0;
 }
 
 int
@@ -191,14 +199,18 @@ int
 window::addkeyboardcallback(void *function) {
     ptKeyboardFunc *pt = (ptKeyboardFunc *)function;
     keyboardCallbacks->add(NULL, pt);
+
+    return 0;
 }
 
 int
 window::swapbuffers(void) {
     glfwSwapBuffers();
+
+    return 0;
 }
 
 bool
 window::isfinished(void) {
-	return glfwGetKey(GLFW_KEY_ESC) && glfwGetWindowParam(GLFW_OPENED);
+    return glfwGetKey(GLFW_KEY_ESC) && glfwGetWindowParam(GLFW_OPENED);
 }

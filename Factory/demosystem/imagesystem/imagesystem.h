@@ -3,7 +3,9 @@
 
 #include "TVasik.h"
 
+extern "C" {
 #include "FreeImage.h"
+}
 
 #include "src/Noise.h"
 #include "src/Checker.h"

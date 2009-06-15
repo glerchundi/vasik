@@ -75,6 +75,7 @@ float Noise::smoothNoise2D(int x, int y) {
 }
 
 float Noise::smoothNoise3D(int x, int y, int z) {
+	return 0.0;
 }
     	
 float Noise::interpolatedNoise1D(float x) {
@@ -106,6 +107,8 @@ float Noise::interpolatedNoise2D(float x, float y) {
 }
 
 float Noise::interpolatedNoise3D(float x, float y, float z) {
+	float total = 0.0;
+	return total;
 }
 
 float Noise::perlinNoise1D(float x, float ifreq, float persistence, int octaves) {

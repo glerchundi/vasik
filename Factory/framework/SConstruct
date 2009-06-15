@@ -1,4 +1,5 @@
 import sys
+import os
 
 output = 'framework'
 
@@ -9,27 +10,34 @@ sources = [
 
 baselibrarypath = '../../BaseLibrary/'
          
-env = Environment(tools = ['default','swig'])
+env = Environment(tools = ['default','swig'],
+                  ENV   = {'PATH' : os.environ['PATH']})
 
-if env.Detect('swig') == None:
-    print 'No SWiG tool detected, install (www.swig.org) it or put it into the $PATH'
-    Exit()
+def checkTool(env,tool):
+    if env.Detect(tool) == None:
+        print "No '"+tool+"' tool detected, install it or put it into the $PATH"
+        Exit()
+
+checkTool(env,'swig')
     
 if sys.platform == 'darwin':
-	env.Append(CCFLAGS=['-D__MACOSX__'])
+    env.Append(CPPDEFINES=['__MACOSX__'])
 
-	env.Append(CPPPATH=[baselibrarypath])
+    env.Append(CPPPATH=[baselibrarypath])
 
-	env.Append(LIBPATH=[baselibrarypath])
-	env.Append(LIBS=['vasik'])
+    env.Append(LIBPATH=[baselibrarypath])
+    env.Append(LIBS=['vasik'])
 
-	env.Replace(SWIGFLAGS='-c++ -lua -I'+baselibrarypath)
+    env.Replace(SWIGFLAGS='-c++ -lua -I'+baselibrarypath)
 
-	env.Replace(SHLINKFLAGS='-bundle -undefined dynamic_lookup')
-	env.Replace(SHLIBPREFIX='')
-	env.Replace(SHLIBSUFFIX='.so')
+    env.Replace(SHLINKFLAGS='-bundle -undefined dynamic_lookup')
+    env.Replace(SHLIBPREFIX='')
+    env.Replace(SHLIBSUFFIX='.so')
+
+    objs = env.SharedObject(sources)
+    target = env.SharedLibrary(output,objs)
 elif sys.platform == 'linux2':
-    env.Append(CCFLAGS=['-D__LINUX__'])
+    env.Append(CPPDEFINES=['__LINUX__'])
 
     env.Append(CPPPATH=[baselibrarypath])
 
@@ -42,6 +50,33 @@ elif sys.platform == 'linux2':
     env.Replace(SHLIBPREFIX='')
     env.Replace(SHLIBSUFFIX='.so')
 
-objs = env.SharedObject(sources)
+    objs = env.SharedObject(sources)
+    target = env.SharedLibrary(output,objs)
+elif sys.platform == 'win32':
+    checkTool(env,'mt')
 
-env.SharedLibrary(output,objs)
+    env.Append(CPPDEFINES=['__WIN32__'])
+    env.Append(CPPDEFINES=[('_SECURE_SCL',0)])
+
+    env.Append(CPPFLAGS=['/EHsc'])
+    env.Append(CPPFLAGS=['/MT'])
+
+    env.Append(CPPPATH=[baselibrarypath])
+
+    env.Append(LIBPATH=[baselibrarypath])
+    env.Append(LIBS=['vasik'])
+
+    env.Replace(SWIGFLAGS='-c++ -lua -I'+baselibrarypath)
+
+    env.Replace(SWIGFLAGS='-c++ -lua -I'+baselibrarypath)
+
+    env.Replace(SHLINKFLAGS='');
+    env.Append(SHLINKFLAGS=['/dll'])
+    env.Replace(SHLIBPREFIX='')
+    env.Replace(SHLIBSUFFIX='.dll')
+
+    objs = env.SharedObject(sources)
+    target = env.SharedLibrary(output,objs)
+
+    env.AddPostAction(target, 'mt.exe -nologo -manifest ${TARGET}.manifest -outputresource:$TARGET;2')
+    env.Clean(target, output+'.dll.manifest')

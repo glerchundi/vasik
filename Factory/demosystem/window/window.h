@@ -3,7 +3,10 @@
 
 #include "TVasik.h"	
 
-#include <GL/glfw.h>
+#define GLFW_DLL
+extern "C" {
+    #include <GL/glfw.h>
+}
 
 class window : public TPlugin {
 public:

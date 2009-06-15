@@ -1,7 +1,28 @@
 #ifndef TSCRIPT_H__
 #define TSCRIPT_H__
 
-#include <unistd.h>
+#ifdef __WIN32__
+    #ifdef EXPORTAPI
+        #define VASIKAPI __declspec(dllexport)    
+    #else
+        #define VASIKAPI __declspec(dllimport)
+    #endif    
+#else
+    #define VASIKAPI
+#endif
+
+#ifdef __MACOSX__
+    #include "CoreFoundation/CoreFoundation.h"
+	#include <unistd.h>
+#elif	__WIN32__
+    #include <windows.h>
+    #include <cstdio>
+#else
+    #include <unistd.h>
+#endif
+
+#include <stdio.h>
+#include <time.h>
 
 extern "C"
 {
@@ -10,15 +31,12 @@ extern "C"
     #include "lauxlib.h"
 }
 
-#ifdef __MACOSX__
-    #include "CoreFoundation/CoreFoundation.h"
-#endif
-
 #include "TLog.h"
+#include "TFunctionDefines.h"
 
-class TScript {
+class VASIKAPI TScript {
 public:
-	static lua_State *state;
+    static lua_State *state;
 
     static void dumpstack(void);
     static void load(const char *name);

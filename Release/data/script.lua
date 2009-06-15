@@ -10,7 +10,7 @@ font        = demosystem.font();
 shell       = demosystem.shell();
 
 -- INIT WINDOW
-window:init('Vasik*',800,600,32,false);
+window:init('Vasik*',640,480,32,false);
 
 -- INIT SOUNDSYSTEM
 soundsys:init();

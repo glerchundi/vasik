@@ -55,7 +55,7 @@ double* dsp::welch(double *x, int N, float fs = 1.0, float d = 0.5)
 	float   Ev;
 	double  *v,*c,*ret,tmpd,w,f;
 	
-	M  = (int)sqrt(N);
+        M  = (int)sqrt((double)N);
 	K  = (int)(((float)M - d)/(1.0-d));
 
 	Ev  = 0.0;
