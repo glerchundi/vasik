@@ -8,21 +8,26 @@ All these steps were followed on a Mac OS X Leopard (10.5.7). It's important to 
 0. Install XCode, you can find it on any Mac OS X Installation DVD (Panther/Tiger/Leopard). *IMPORTANT! If you plan to install FreeImage old Panther SDK (10.3.9) is needed. Check it when you are installing XCode Tools!*
 1. If needed, install python. I'm not sure about Panther but Tiger/Leopard come with python in a default installation.
 2. Install SCons (http://www.scons.org):
+{{{
     shell> tar xvfz scons-1.2.0.tar.gz
     shell> cd scons-1.2.0/
     shell> sudo python setup.py install
+}}}
 3. Install Swig (http://www.swig.org):
+{{{
     shell> tar xvfz swig-1.3.39.tar.gz
     shell> cd swig-1.3.39/
     shell> ./configure
     shell> make
     shell> sudo make install
+}}}
 4. Install Lua (http://www.lua.org):
+{{{
     shell> tar xvfz lua-5.1.4.tar.gz
     shell> cd lua-5.1.4/
     shell> make macosx
     shell> sudo make install 
-
+}}}
 Optional to run 'demosystem':
 
 0. Install GLFW (http://glfw.sourceforge.net):
