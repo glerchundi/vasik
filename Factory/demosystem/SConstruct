@@ -93,7 +93,7 @@ elif sys.platform == 'linux2':
     env.Append(LIBS=['freeimage'])
     env.Append(LIBS=['GL','GLU'])
     # soundsystem
-    env.Append(LIBS=['fmodx86','fftw3'])
+    env.Append(LIBS=['fmod-3.75','fftw3'])
     # maths
     env.Append(LIBS=['m'])
     # font
