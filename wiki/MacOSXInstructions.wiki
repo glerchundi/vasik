@@ -1,5 +1,4 @@
 #summary How to install Vasik* and its dependencies instructions.
-#labels MacOSX
 
 = Introduction =
 
@@ -9,69 +8,69 @@ All these steps were followed on a Mac OS X Leopard (10.5.7). It's important to 
   #  If needed, install python. I'm not sure about Panther but Tiger/Leopard come with python in a default installation.
   # Install SCons (http://www.scons.org):
 {{{
-    shell> tar xvfz scons-1.2.0.tar.gz
-    shell> cd scons-1.2.0/
-    shell> sudo python setup.py install
+    tar xvfz scons-1.2.0.tar.gz
+    cd scons-1.2.0/
+    sudo python setup.py install
 }}}
   # Install Swig (http://www.swig.org):
 {{{
-    shell> tar xvfz swig-1.3.39.tar.gz
-    shell> cd swig-1.3.39/
-    shell> ./configure
-    shell> make
-    shell> sudo make install
+    tar xvfz swig-1.3.39.tar.gz
+    cd swig-1.3.39/
+    ./configure
+    make
+    sudo make install
 }}}
   # Install Lua (http://www.lua.org):
 {{{
-    shell> tar xvfz lua-5.1.4.tar.gz
-    shell> cd lua-5.1.4/
-    shell> make macosx
-    shell> sudo make install 
+    tar xvfz lua-5.1.4.tar.gz
+    cd lua-5.1.4/
+    make macosx
+    sudo make install 
 }}}
 Optional to run 'demosystem':
 
   # Install GLFW (http://glfw.sourceforge.net):
 {{{
-    shell> tar xvfz glfw-2.6.tar.gz
-    shell> cd glfw/
-    shell> make macosx-gcc
-    shell> sudo make macosx-install
+    tar xvfz glfw-2.6.tar.gz
+    cd glfw/
+    make macosx-gcc
+    sudo make macosx-install
 }}}
   # Install FreeImage (http://freeimage.sourceforge.net): *IMPORTANT! You need to have Mac OS X 10.3.9 SDK installed on you system, don't forget to click on the checkbox when installing XCode Tools!*
 {{{
-    shell> unzip FreeImage3120.zip
-    shell> cd FreeImage/
-    shell> make
-    shell> sudo make install
+    unzip FreeImage3120.zip
+    cd FreeImage/
+    make
+    sudo make install
 }}}
   # Install FreeType (http://freetype.sourceforge.net):
 {{{
-    shell> tar xvfz freetype-2.3.9.tar.gz
-    shell> cd freetype-2.3.9/
-    shell> ./configure
-    shell> make
-    shell> sudo make install
-    shell> sudo ln -s /usr/local/include/freetype2/freetype/ /usr/local/include/freetype (to fix bad header placing...)
+    tar xvfz freetype-2.3.9.tar.gz
+    cd freetype-2.3.9/
+    ./configure
+    make
+    sudo make install
+    sudo ln -s /usr/local/include/freetype2/freetype/ /usr/local/include/freetype (to fix bad header placing...)
 }}}
   # Install FFTW3 (http://www.fftw.org)
 {{{
-    shell> ./configure
-    shell> make
-    shell> sudo make install
+    ./configure
+    make
+    sudo make install
 }}}
   # Install FMOD 3.75 (http.//www.fmod.org)
 {{{
-    shell> unzip fmodapi375mac.zip
-    shell> cd fmodapi375mac/
-    shell> sudo cp api/inc/* /usr/local/include/
-    shell> sudo cp api/lib/* /usr/local/lib/
+    unzip fmodapi375mac.zip
+    cd fmodapi375mac/
+    sudo cp api/inc/* /usr/local/include/
+    sudo cp api/lib/* /usr/local/lib/
 }}}    
 Hei! If you've achieved correctly those steps...You're ready to run:
 {{{
-shell> cd Vasik/ (to the root of Vasik tree)
-shell> ./compile.sh
-shell> cd Release/
-shell> vim/emacs/WhateverYouUseToEditFiles data/script.lua (modify the script)
-shell> ./player (run! run! run!)
+cd Vasik/ (to the root of Vasik tree)
+./compile.sh
+cd Release/
+vim/emacs/WhateverYouUseToEditFiles data/script.lua (modify the script)
+./player (run! run! run!)
 }}}
 You're done!!! Happy Vasik`*` coding!
