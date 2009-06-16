@@ -1,4 +1,4 @@
-#summary How to install Vasik* and its dependencies instructions.
+#summary How to install Vasik* and its dependencies on Mac OS X.
 
 = Introduction =
 
