@@ -164,7 +164,7 @@ void glFont::open(const std::string& filename, unsigned int size)
 
     // create and zero the memory
     unsigned char* image = new unsigned char[imageHeight * imageWidth];
-    std::memset(image, 0, imageHeight * imageWidth);
+    memset(image, 0, imageHeight * imageWidth);
 
     // These are the position at which to draw the next glyph
     size_t x = MARGIN;
@@ -275,7 +275,7 @@ void glFont::drawText(float x, float y, const char *str, ...) const
     glBindTexture(GL_TEXTURE_2D, texID_);
     glPushMatrix();
     glTranslated(x,y,0);
-    for(unsigned int i=0; i < std::strlen(buf); ++i)
+    for(unsigned int i=0; i < strlen(buf); ++i)
     {
         unsigned char ch( buf[i] - SPACE );     // ch-SPACE = DisplayList offset
         // replace characters outside the valid range with undrawable
@@ -288,7 +288,7 @@ void glFont::drawText(float x, float y, const char *str, ...) const
 
     // Alternative, ignores undrawables (no noticable speed difference)
     //glListBase(listBase_-32);
-    //glCallLists(static_cast<int>(std::strlen(buf)), GL_UNSIGNED_BYTE, buf);
+    //glCallLists(static_cast<int>(strlen(buf)), GL_UNSIGNED_BYTE, buf);
 
     glPopMatrix();
 }
@@ -316,7 +316,7 @@ void glFont::drawText(float x, float y, const std::string& str) const
 
     // Alternative, ignores undrawables (no noticable speed difference)
     //glListBase(listBase_-32);
-    //glCallLists(static_cast<int>(std::strlen(buf)), GL_UNSIGNED_BYTE, buf);
+    //glCallLists(static_cast<int>(strlen(buf)), GL_UNSIGNED_BYTE, buf);
 
     glPopMatrix();
 }
