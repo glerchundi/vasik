@@ -31,14 +31,15 @@ Optional to run 'demosystem':
   # Install GLFW (http://glfw.sourceforge.net): 
     * Prerequisites to build GLFW: 
     {{{
-        sudo apt-get install libglu1-mesa-dev libgl1-mesa-dev mesa-common-dev (or apt-get install libglu-dev)
+    sudo apt-get install libglu1-mesa-dev libgl1-mesa-dev mesa-common-dev (or apt-get install libglu-dev)
     }}}
-{{{
+    * GLFW package: 
+    {{{
     tar xvfz glfw-2.6.tar.gz
     cd glfw/
     make x11-gcc
     sudo make x11-install
-}}}
+    }}}
   # Install FreeImage (http://freeimage.sourceforge.net): *IMPORTANT! You need to have Mac OS X 10.3.9 SDK installed on you system, don't forget to click on the checkbox when installing XCode Tools!*
 {{{
     unzip FreeImage3120.zip
