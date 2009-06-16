@@ -67,6 +67,10 @@ Optional to run 'demosystem':
 }}}    
 Hei! If you've achieved correctly those steps...You're ready to run:
 {{{
+cd Vasik/ (to the root of Vasik tree)
 ./compile.sh
+cd Release/
+vim/emacs/WhateverYouUseToEditFiles data/script.lua (modify the script)
+./player (run! run! run!)
 }}}
 You're done!!! Happy Vasik`*` coding!
