@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary How to install Vasik* and its dependencies on GNU/Linux.
 
 After going through different GNU/Linux distributions, I've decided to stop moving and use Ubuntu 8.10 (Intrepid Ibex) as my default GNU/Linux desktop choice. All these steps were followed on a Ubuntu 8.10 (Intrepid Ibex). It's important to install all packages in a place where the compiler and the linker can find. In the example below include file are installed in /usr/local/include/ and libraries in /usr/local/lib/.
 
