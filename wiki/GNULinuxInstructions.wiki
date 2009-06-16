@@ -36,8 +36,7 @@ Optional to run 'demosystem':
     make x11-gcc
     sudo make x11-install
 }}}
-  # Install FreeImage (http://freeimage.sourceforge.net):
-    *IMPORTANT! You need to have Mac OS X 10.3.9 SDK installed on you system, don't forget to click on the checkbox when installing XCode Tools!*
+  # Install FreeImage (http://freeimage.sourceforge.net): *IMPORTANT! You need to have Mac OS X 10.3.9 SDK installed on you system, don't forget to click on the checkbox when installing XCode Tools!*
 {{{
     unzip FreeImage3120.zip
     cd FreeImage/
