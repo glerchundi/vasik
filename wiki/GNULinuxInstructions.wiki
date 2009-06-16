@@ -28,9 +28,12 @@ After going through different GNU/Linux distributions, I've decided to stop movi
 
 Optional to run 'demosystem':
 
-  # Install GLFW (http://glfw.sourceforge.net): Prerequisites to build GLFW: 
+  # Install GLFW (http://glfw.sourceforge.net): 
+    * Prerequisites to build GLFW: 
+    {{{
+        sudo apt-get install libglu1-mesa-dev libgl1-mesa-dev mesa-common-dev (or apt-get install libglu-dev)
+    }}}
 {{{
-    sudo apt-get install libglu1-mesa-dev libgl1-mesa-dev mesa-common-dev (or apt-get install libglu-dev)
     tar xvfz glfw-2.6.tar.gz
     cd glfw/
     make x11-gcc
